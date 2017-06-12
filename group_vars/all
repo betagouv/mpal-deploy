@@ -1,0 +1,10 @@
+---
+haproxy_frontends:
+  - name: '{{ haproxy_frontend_name }}'
+    ip: '{{ haproxy_frontend_ip }}'
+    port: '{{ haproxy_frontend_port }}'
+    backend: '{{ haproxy_backend_name }}'
+
+haproxy_backends:
+ - name: '{{ haproxy_backend_name }}'
+   servers: '{{ haproxy_backend_servers }}'

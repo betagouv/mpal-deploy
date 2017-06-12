@@ -1,0 +1,22 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+docker:
+  containers:
+    - name: haproxy
+      image: debian
+      image_version: jessie
+      ansible_groups:
+        - haproxy
+      privileged: True
+      cap_add:
+        - 'SYS_MODULE'
+        - 'NET_ADMIN'
+        - 'NET_RAW'
+      volume_mounts:
+        - '/proc/sys/net/ipv4/ip_nonlocal_bind:/var/proc/sys/net/ipv4/ip_nonlocal_bind'
+      network_mode: host
+verifier:
+  name: serverspec

@@ -1,0 +1,13 @@
+---
+- hosts: load-balancers
+  roles:
+    - name: repos
+      tags: [load-balancers, repos]
+    - name: haproxy
+      tags: [load-balancers, haproxy]
+
+- hosts: load-balancers
+  serial: 1
+  roles:
+    - name: keepalived
+      tags: [load-balancers, keepalived]

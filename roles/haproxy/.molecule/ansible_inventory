@@ -1,0 +1,4 @@
+haproxy ansible_connection=docker
+
+[haproxy]
+haproxy

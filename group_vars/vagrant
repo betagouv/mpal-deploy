@@ -1,0 +1,21 @@
+---
+
+keepalived_vip: '10.0.1.66'
+keepalived_configurations:
+  - keepalived_instance: '1'
+    keepalived_interface: 'eth1'
+    keepalived_priority: '150'
+  - keepalived_instance: '2'
+    keepalived_interface: 'eth1'
+    keepalived_priority: '100'
+
+haproxy_frontend_name: front-test-haproxy
+haproxy_frontend_ip: "{{ keepalived_vip }}"
+haproxy_frontend_port: 80
+
+haproxy_backend_name: back-test-haproxy
+haproxy_backend_servers:
+  - name: 'be-test-haproxy-google'
+    fqdn: '216.58.213.163'
+  - name: 'be-test-haproxy-cpc'
+    fqdn: '163.172.103.177'

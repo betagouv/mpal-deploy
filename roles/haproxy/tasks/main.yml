@@ -1,0 +1,38 @@
+---
+
+- name: Add backports repo
+  become: true
+  apt_repository:
+    repo: deb http://http.debian.net/debian {{ ansible_distribution_release }}-backports main
+    state: present
+    update_cache: yes
+
+- name: Install haproxy
+  become: true
+  apt:
+    name: haproxy
+    state: present
+
+- name: Configures sysctl to enable non-local ip binding (sysctl.conf)
+  become: true
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: 1
+    state: present
+    reload: yes
+
+- name: Configure haproxy
+  become: true
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: haproxy
+    group: haproxy
+  notify: reload haproxy
+
+- name: Activates haproxy service
+  become: true
+  service:
+    name: haproxy
+    enabled: yes
+    state: started

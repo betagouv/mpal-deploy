@@ -1,0 +1,14 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+docker:
+  containers:
+    - name: keepalived
+      image: debian
+      image_version: jessie
+      ansible_groups:
+        - keepalived
+verifier:
+  name: serverspec

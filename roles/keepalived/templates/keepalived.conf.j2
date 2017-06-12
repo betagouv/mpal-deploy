@@ -1,0 +1,11 @@
+vrrp_instance vip_{{ keepalived_instance }} {
+    state MASTER
+    interface {{ keepalived_interface }}
+    virtual_router_id 1
+    priority {{ keepalived_priority }}
+    advert_int 1
+
+    virtual_ipaddress {
+        {{ keepalived_vip }}
+    }
+}

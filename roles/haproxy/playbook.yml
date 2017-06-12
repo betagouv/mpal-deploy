@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - role: haproxy
+      haproxy_frontends:
+        - name: 'fe-test-haproxy'
+          ip: '127.0.0.1'
+          port: '80'
+          backend: 'be-test-haproxy'
+      haproxy_backends:
+       - name: 'be-test-haproxy'
+         description: 'test backend for haproxy playbook'
+         servers:
+           - name: 'be-test-haproxy-google'
+             fqdn: '216.58.213.163'
+           - name: 'be-test-haproxy-cpc'
+             fqdn: '163.172.103.177'

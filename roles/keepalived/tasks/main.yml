@@ -1,0 +1,40 @@
+---
+
+- name: Add backports repo
+  become: true
+  apt_repository:
+    repo: deb http://http.debian.net/debian {{ ansible_distribution_release }}-backports main
+    state: present
+    update_cache: yes
+
+- name: Install keepalived
+  become: true
+  apt:
+    name: keepalived
+    state: present
+
+- name: Add keepalived group
+  become: true
+  group:
+    name: keepalived
+    state: present
+
+- name: Add keepalived user
+  become: true
+  user:
+    name: keepalived
+    state: present
+
+- name: Confiure keepalived
+  become: true
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: keepalived
+    group: keepalived
+  vars:
+    keepalived_instance: "{{ item.keepalived_instance }}"
+    keepalived_interface: "{{ item.keepalived_interface }}"
+    keepalived_priority: "{{ item.keepalived_priority }}"
+  with_items: "{{ keepalived_configurations }}"
+  notify: restart keepalived

@@ -1,0 +1,4 @@
+repos ansible_connection=docker
+
+[repos]
+repos

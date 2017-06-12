@@ -1,0 +1,7 @@
+---
+
+- name: restart keepalived
+  become: true
+  service:
+    name: keepalived
+    state: restarted
