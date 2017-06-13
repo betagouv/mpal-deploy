@@ -1,0 +1,4 @@
+postgresql ansible_connection=docker
+
+[postgresql]
+postgresql

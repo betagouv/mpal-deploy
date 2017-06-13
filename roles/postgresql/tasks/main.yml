@@ -1,0 +1,21 @@
+---
+
+- name: Install PostgreSQL
+  become: true
+  apt:
+    name: postgresql-9.4
+    state: present
+
+- name: Configures PostgreSQL so that it listens to every interface
+  become: true
+  lineinfile:
+    path: /etc/postgresql/9.4/main/postgresql.conf
+    regexp: "^#?listen_addresses =.*$"
+    line: "listen_addresses = '*'"
+  notify: restart postgresql
+
+- name: Install PostgreSQL client
+  become: true
+  apt:
+    name: postgresql-client-9.4
+    state: present

@@ -11,3 +11,8 @@
   roles:
     - name: keepalived
       tags: [load-balancers, keepalived]
+
+- hosts: postgresql
+  roles:
+    - name: postgresql
+      tags: [backends, postgresql]
