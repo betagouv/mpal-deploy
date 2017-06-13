@@ -16,6 +16,7 @@ context 'PostgreSQL should run properly' do
   end
 
   describe service('postgresql') do
+    it { should be_running }
     it { should be_enabled }
   end
 end

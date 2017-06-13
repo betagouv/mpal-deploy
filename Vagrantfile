@@ -28,9 +28,14 @@ Vagrant.configure(2) do |config|
     web.vm.network "private_network", ip: "10.0.1.5"
   end
 
-  config.vm.define "backends" do |backends|
-    backends.vm.box = box_image
-    backends.vm.network "private_network", ip: "10.0.1.6"
+  config.vm.define "backend-1" do |backend|
+    backend.vm.box = box_image
+    backend.vm.network "private_network", ip: "10.0.1.6"
+  end
+
+  config.vm.define "backend-2" do |backend|
+    backend.vm.box = box_image
+    backend.vm.network "private_network", ip: "10.0.1.7"
   end
 
 end

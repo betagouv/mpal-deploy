@@ -19,3 +19,12 @@ haproxy_backend_servers:
     fqdn: '216.58.213.163'
   - name: 'be-test-haproxy-cpc'
     fqdn: '163.172.103.177'
+
+redis_password: foobar
+redis_master_conf:
+  ip: 10.0.1.6
+  password: '{{ redis_password }}'
+redis_slaves_conf:
+  - ip: "{{ inventory_hostname }}"
+    password: "{{ redis_password }}"
+    master_password: "{{ redis_password }}"

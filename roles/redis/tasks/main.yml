@@ -1,0 +1,42 @@
+---
+
+- name: Install Redis server
+  become: true
+  apt:
+    name: redis-server
+    state: present
+
+- name: Configures Redis master
+  become: true
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+    owner: root
+    group: root
+  vars:
+    redis_node_ip: "{{ redis_master_conf.ip }}"
+    redis_node_password: "{{ redis_master_conf.password }}"
+  notify: restart redis
+  when: redis_master | bool
+
+- name: Configures Redis slave(s)
+  become: true
+  template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+    owner: root
+    group: root
+  vars:
+    # redis_master: false
+    redis_node_ip: "{{ item.ip }}"
+    redis_node_password: "{{ item.password }}"
+    redis_master_ip: "{{ redis_master_conf.ip }}"
+    redis_master_password: "{{ item.master_password }}"
+  with_items: "{{ redis_slaves_conf }}"
+  notify: restart redis
+  when: not (redis_master | bool)
+
+- name: Install Redis tools
+  apt:
+    name: redis-tools
+    state: present

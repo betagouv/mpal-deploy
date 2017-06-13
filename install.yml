@@ -16,3 +16,9 @@
   roles:
     - name: postgresql
       tags: [backends, postgresql]
+
+- hosts: redis
+  serial: 1
+  roles:
+    - name: redis
+      tags: [backends, redis]

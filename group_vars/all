@@ -8,3 +8,6 @@ haproxy_frontends:
 haproxy_backends:
  - name: '{{ haproxy_backend_name }}'
    servers: '{{ haproxy_backend_servers }}'
+
+redis_master_conf: {}
+redis_slaves_conf: []

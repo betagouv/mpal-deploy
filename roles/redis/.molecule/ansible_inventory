@@ -1,0 +1,4 @@
+redis ansible_connection=docker
+
+[group1]
+redis
