@@ -1,24 +1,25 @@
 ---
 - hosts: load-balancers
+  gather_facts: yes
   roles:
     - name: repos
-      tags: [load-balancers, repos]
+      tags: load-balancers, repos
     - name: haproxy
-      tags: [load-balancers, haproxy]
+      tags: load-balancer, haproxy
 
 - hosts: load-balancers
   serial: 1
   roles:
     - name: keepalived
-      tags: [load-balancers, keepalived]
+      tags: load-balancer, keepalived
 
 - hosts: postgresql
   roles:
     - name: postgresql
-      tags: [backends, postgresql]
+      tags: backends, postgresql
 
 - hosts: redis
   serial: 1
   roles:
     - name: redis
-      tags: [backends, redis]
+      tags: backends, redis
