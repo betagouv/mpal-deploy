@@ -5,6 +5,7 @@
   apt:
     name: redis-server
     state: present
+  tags: [backends, redis]
 
 - name: Configures Redis master
   become: true
@@ -18,6 +19,7 @@
     redis_node_password: "{{ redis_master_conf.password }}"
   notify: restart redis
   when: redis_master | bool
+  tags: [backends, redis, redis-master]
 
 - name: Configures Redis slave(s)
   become: true
@@ -27,7 +29,6 @@
     owner: root
     group: root
   vars:
-    # redis_master: false
     redis_node_ip: "{{ item.ip }}"
     redis_node_password: "{{ item.password }}"
     redis_master_ip: "{{ redis_master_conf.ip }}"
@@ -35,8 +36,10 @@
   with_items: "{{ redis_slaves_conf }}"
   notify: restart redis
   when: not (redis_master | bool)
+  tags: [backends, redis, redis-slave]
 
 - name: Install Redis tools
   apt:
     name: redis-tools
     state: present
+  tags: [backends, redis]

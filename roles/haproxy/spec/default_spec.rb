@@ -18,6 +18,7 @@ context 'HAproxy is properly installed' do
   end
 
   describe service('haproxy') do
+    it { should be_started }
     it { should be_enabled }
   end
 

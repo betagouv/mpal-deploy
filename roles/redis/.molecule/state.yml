@@ -1,9 +1,15 @@
 ---
-converged: null
-created: null
+converged: true
+created: true
 default_platform: null
 default_provider: null
-driver: null
+driver: docker
 driver_config: {}
-hosts: {}
+hosts:
+  redis-master:
+    groups:
+    - redis-master
+  redis-slave:
+    groups:
+    - redis-slave
 multiple_platforms: null

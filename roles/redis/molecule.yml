@@ -5,12 +5,12 @@ driver:
   name: docker
 docker:
   containers:
-    - name: redis
+    - name: redis-master
       image: debian
       image_version: jessie
       ansible_groups:
         - redis-master
-    - name: redis
+    - name: redis-slave
       image: debian
       image_version: jessie
       ansible_groups:

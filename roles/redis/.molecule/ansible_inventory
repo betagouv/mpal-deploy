@@ -1,4 +1,8 @@
-redis ansible_connection=docker
+redis-master ansible_connection=docker
+redis-slave ansible_connection=docker
 
-[group1]
-redis
+[redis-slave]
+redis-slave
+
+[redis-master]
+redis-master

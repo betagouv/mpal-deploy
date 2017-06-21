@@ -61,6 +61,7 @@ tcp-backlog 511
 # Examples:
 #
 # bind 192.168.1.100 10.0.0.1
+# BIND MANAGED BY ANSIBLE : do not modify
 bind {{ redis_node_ip }}
 
 # Specify the path for the Unix socket that will be used to listen for
@@ -204,6 +205,7 @@ dir /var/lib/redis
 #
 # slaveof <masterip> <masterport>
 {% if not (redis_master | bool ) %}
+# SLAVEOF MANAGED BY ANSIBLE : do not modify
 slaveof {{ redis_master_ip }} 6379
 {% endif %}
 
@@ -214,6 +216,7 @@ slaveof {{ redis_master_ip }} 6379
 #
 # masterauth <master-password>
 {% if not (redis_master | bool ) %}
+# MASTERAUTH MANAGED BY ANSIBLE : do not modify
 masterauth {{ redis_master_password }}
 {% endif %}
 
@@ -352,6 +355,7 @@ slave-priority 100
 # use a very strong password otherwise it will be very easy to break.
 #
 # requirepass foobared
+# REQUREPASS MANAGED BY ANSIBLE : do not modify
 requirepass {{ redis_node_password }}
 
 # Command renaming.

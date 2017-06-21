@@ -1,4 +1,24 @@
 ---
-- hosts: all
+- hosts: redis-master
   roles:
     - role: redis
+      redis_master: true
+      redis_master_conf:
+        ip: 127.0.0.1
+        password: foobar
+      redis_slaves_conf:
+        - ip: 127.0.0.1
+          password: foobar
+          master_password: foobar
+
+- hosts: redis-slave
+  roles:
+    - role: redis
+      redis_master: false
+      redis_master_conf:
+        ip: 127.0.0.1
+        password: foobar
+      redis_slaves_conf:
+        - ip: 127.0.0.1
+          password: foobar
+          master_password: foobar
