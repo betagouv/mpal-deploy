@@ -1,5 +1,8 @@
 ---
 
+- name: Gather facts
+  setup:
+
 - name: Add backports repo
   become: true
   apt_repository:

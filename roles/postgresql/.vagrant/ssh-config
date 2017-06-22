@@ -1,0 +1,11 @@
+Host molecule-postgresql
+  HostName 127.0.0.1
+  User vagrant
+  Port 2201
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile "/Users/tpepio/Documents/projects/anah/anah-deploy/roles/postgresql/.vagrant/machines/molecule-postgresql/virtualbox/private_key"
+  IdentitiesOnly yes
+  LogLevel FATAL
+

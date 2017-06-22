@@ -1,30 +1,30 @@
 ---
 dependency:
   name: galaxy
-# driver:
-#   name: vagrant
-# vagrant:
-#   platforms:
-#     - name: jessie64
-#       box: debian/jessie64
-#   providers:
-#     - name: virtualbox
-#       type: virtualbox
-#       options:
-#         memory: 512
-#         cpus: 2
-#   instances:
-#     - name: molecule-postgresql
-#       ansible_groups:
-#         - postgresql
 driver:
-  name: docker
-docker:
-  containers:
-    - name: postgresql
-      image: debian
-      image_version: jessie
+  name: vagrant
+vagrant:
+  platforms:
+    - name: jessie64
+      box: debian/jessie64
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 2
+  instances:
+    - name: molecule-postgresql
       ansible_groups:
         - postgresql
+# driver:
+#   name: docker
+# docker:
+#   containers:
+#     - name: postgresql
+#       image: debian
+#       image_version: jessie
+#       ansible_groups:
+#         - postgresql
 verifier:
   name: serverspec

@@ -11,3 +11,6 @@ haproxy_backends:
 
 redis_master_conf: {}
 redis_slaves_conf: []
+
+postgresql_mpal_username: mpal
+postgresql_mpal_db_name: mpal

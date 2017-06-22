@@ -6,6 +6,15 @@
     name: postgresql-9.4
     state: present
 
+- name: Install libpq and psycopg2 so that we can use ansible postgresql modules
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libpq-dev
+    - python-psycopg2
+
 - name: Configures PostgreSQL so that it listens to every interface
   become: true
   lineinfile:
@@ -19,3 +28,21 @@
   apt:
     name: postgresql-client-9.4
     state: present
+
+- name: Create the MPAL Postgres user
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name: "{{ postgresql_mpal_username }}"
+    password: "{{ postgresql_mpal_password }}"
+    role_attr_flags: SUPERUSER
+    login_user: postgres
+
+- name: Create an empty MPAL database
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ postgresql_mpal_db_name }}"
+    owner: "{{ postgresql_mpal_username }}"
+    encoding: UTF-8
+    login_user: postgres
