@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+    - role: users
+      users:
+        - name: user1
+          public_key: pubkey1
+        - name: user2
+          public_key: pubkey2

@@ -1,0 +1,14 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+docker:
+  containers:
+    - name: users
+      image: debian
+      image_version: jessie
+      ansible_groups:
+        - users
+verifier:
+  name: serverspec

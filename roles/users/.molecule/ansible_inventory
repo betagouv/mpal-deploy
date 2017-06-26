@@ -1,0 +1,4 @@
+users ansible_connection=docker
+
+[users]
+users

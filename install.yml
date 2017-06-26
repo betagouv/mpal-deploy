@@ -1,6 +1,10 @@
 ---
+- hosts: all
+  roles:
+    - name: users
+      tags: users
+
 - hosts: load-balancers
-  gather_facts: yes
   roles:
     - name: repos
       tags: load-balancers, repos
@@ -23,3 +27,8 @@
   roles:
     - name: redis
       tags: backends, redis
+
+- hosts: webapps
+  roles:
+    - name: webapps
+      tags: webapps

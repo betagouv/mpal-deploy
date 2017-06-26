@@ -1,0 +1,45 @@
+---
+
+- name: Create groups
+  become: true
+  group:
+    name: "{{ item.name }}"
+    state: present
+  with_items: "{{ users }}"
+
+- name: Create users
+  become: true
+  user:
+    name: "{{ item.name }}"
+    group: "{{ item.name }}"
+    shell: /bin/bash
+  with_items: "{{ users }}"
+
+- name: Create their ssh directory
+  become: true
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: 0755
+  with_items: "{{ users }}"
+
+- name: Create their authorized_keys file
+  become: true
+  copy:
+    content: "{{ item.public_key }}"
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: 0600
+  with_items: "{{ users }}"
+
+- name: Make everyone sudoer
+  become: true
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%{{ item.name }}"
+    line: "%{{ item.name }} ALL=(ALL) NOPASSWD: ALL"
+  with_items: "{{ users }}"

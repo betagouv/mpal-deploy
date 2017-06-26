@@ -1,0 +1,38 @@
+---
+
+- name: Install some stuff the app needs and I do not know why
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - 'nodejs'
+    - 'build-essential'
+    - 'qt5-default'
+    - 'libqt5webkit5-dev'
+    - 'libpq5'
+
+- name: Install ruby and rubygems
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - 'ruby-full'
+    - 'rubygems-integration'
+
+# - name: Copy the bundled app
+#   become: true
+#   copy:
+#     src:
+#     dest: /anah.tar.bz2
+#     owner: root
+#     group: root
+#     mode: 0700
+#
+# - name: Unpack the app
+#   become: true
+#   unarchive:
+#     src: /anah.tar.bz2
+#     dest: /

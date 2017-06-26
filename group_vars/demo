@@ -1,12 +1,9 @@
 ---
-keepalived_vip: '10.0.1.66'
+keepalived_vip: '10.66.212.14'
 keepalived_configurations:
   - keepalived_instance: '1'
-    keepalived_interface: 'eth1'
+    keepalived_interface: 'eth0'
     keepalived_priority: '150'
-  - keepalived_instance: '2'
-    keepalived_interface: 'eth1'
-    keepalived_priority: '100'
 
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
@@ -14,14 +11,14 @@ haproxy_frontend_port: 80
 
 haproxy_backend_name: back-test-haproxy
 haproxy_backend_servers:
-  - name: 'be-test-haproxy-google'
-    fqdn: '216.58.213.163'
-  - name: 'be-test-haproxy-cpc'
+  - name: 'be-demat-webapp1'
+    fqdn: '172.217.19.227'
+  - name: 'be-demat-webapp2'
     fqdn: '163.172.103.177'
 
 redis_password: foobar
 redis_master_conf:
-  ip: 10.0.1.6
+  ip: 10.66.212.13
   password: '{{ redis_password }}'
 redis_slaves_conf:
   - ip: "{{ inventory_hostname }}"
