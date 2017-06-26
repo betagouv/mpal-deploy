@@ -1,0 +1,45 @@
+---
+- hosts: "{{ host }}"
+  tasks:
+    - name: Upgrade all packages
+      apt:
+        upgrade: yes
+
+    - name: Install sudo
+      apt:
+        name: sudo
+        state: present
+
+    - name: Create the ansible group
+      group:
+        name: ansible
+        state: present
+
+    - name: Create the ansible user
+      user:
+        name: ansible
+        group: ansible
+        shell: /bin/bash
+
+    - name: Create ansible ssh directory
+      file:
+        path: /home/ansible/.ssh
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: 0755
+
+    - name: Create the authorized file key
+      copy:
+        content: "{{ ansible_public_key }}"
+        dest: "/home/ansible/.ssh/authorized_keys"
+        owner: ansible
+        group: ansible
+        mode: 0600
+
+    - name: Make ansible sudoer
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: "^%ansible"
+        line: "%ansible ALL=(ALL) NOPASSWD: ALL"
