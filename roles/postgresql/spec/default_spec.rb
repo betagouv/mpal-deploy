@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-describe file('/etc/hosts') do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
-end
-
 context 'PostgreSQL should run properly' do
   context 'As root' do
     describe file('/etc/postgresql/9.4/main/postgresql.conf') do
