@@ -30,5 +30,7 @@
 
 - hosts: webapps
   roles:
+    - name: ruby
+      tags: ruby
     - name: webapps
       tags: webapps
