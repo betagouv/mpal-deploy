@@ -8,21 +8,22 @@ keepalived_configurations:
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
 haproxy_frontend_port: 80
-
 haproxy_backend_name: back-test-haproxy
 haproxy_backend_servers:
   - name: 'be-demat-webapp1'
-    fqdn: '172.217.19.227'
+    fqdn: '10.66.212.11'
   - name: 'be-demat-webapp2'
-    fqdn: '163.172.103.177'
+    fqdn: '10.66.212.12'
 
+redis_host_ip: 10.66.212.13
+redis_host_port: 6379
 redis_password: foobar
 redis_master_conf:
   ip: 10.66.212.13
   password: '{{ redis_password }}'
-redis_slaves_conf:
-  - ip: "{{ inventory_hostname }}"
-    password: "{{ redis_password }}"
-    master_password: "{{ redis_password }}"
 
+postgresql_host_ip: 10.66.212.13
+postgresql_host_port: 5432
 postgresql_mpal_password: mpal
+
+dot_env_conf: .env.demo
