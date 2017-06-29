@@ -13,26 +13,43 @@
     - 'libqt5webkit5-dev'
     - 'libpq5'
 
-- name: Install ruby and rubygems
+- name: Unpack the app
   become: true
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - 'ruby-full'
-    - 'rubygems-integration'
+  unarchive:
+    src: "{{ package }}.tar.bz2"
+    dest: /
+  when: package is defined
 
-# - name: Copy the bundled app
+- name: Check if bundler is installed
+  become: true
+  command: which bundle
+  register: bundler_installed
+  failed_when: false
+  changed_when: false
+  when: package is defined
+
+- name: Install bundler
+  become: true
+  command: gem install bundler -v 1.15.1
+  when: package is defined and bundler_installed.rc != 0
+
+- name: Install the vendored gems
+  become: true
+  bundler:
+    chdir: /mpal
+    executable: /mpal/bin/bundle
+    deployment_mode: true
+    state: present
+  when: package is defined
+
+# - name: Configure the environement file
 #   become: true
-#   copy:
-#     src:
-#     dest: /anah.tar.bz2
-#     owner: root
-#     group: root
-#     mode: 0700
-#
-# - name: Unpack the app
-#   become: true
-#   unarchive:
-#     src: /anah.tar.bz2
-#     dest: /
+#   lineinfile:
+#     path: /mpal/{{ dot_env_conf }}
+#     regexp: "{{ item.regexp }}"
+#     line: "{{ item.line }}"
+#   with_items:
+#     - regexp: "^POSTGRES_IP_PORT="
+#       line: "POSTGRES_IP_PORT={{ postgresql_host_ip }}:{{ postgresql_host_port }}"
+#     - regexp: "^REDIS_IP_PORT={{ redis_host_ip }}:{{ redis_host_port }}"
+#   when: package is defined

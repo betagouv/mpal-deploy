@@ -1,0 +1,67 @@
+---
+
+- name: Install packages needed to compile Ruby
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - 'make'
+    - 'build-essential'
+    - 'libssl-dev'
+    - 'zlib1g-dev'
+    - 'libreadline-dev'
+    - 'libgdbm-dev'
+    - 'libcurl4-openssl-dev'
+    - 'libicu-dev'
+    - 'libpq-dev'
+
+- name: Check if ruby is already installed
+  become: true
+  command: ruby -v
+  register: ruby_version
+  changed_when: false
+  failed_when: false
+
+- name: Downloads and untar ruby 2.3.1
+  become: true
+  unarchive:
+    src: https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.bz2
+    dest: /tmp
+    remote_src: true
+    validate_certs: false
+  when: ruby_version.rc != 0
+
+- name: Configure ruby
+  become: true
+  command: ./configure --with-openssl-dir=/usr/bin/ chdir=/tmp/ruby-2.3.1
+  when: ruby_version.rc != 0
+
+- name: Make ruby
+  become: true
+  make:
+    chdir: /tmp/ruby-2.3.1
+  when: ruby_version.rc != 0
+
+- name: Install ruby
+  become: true
+  make:
+    chdir: /tmp/ruby-2.3.1
+    target: install
+  when: ruby_version.rc != 0
+
+# - name: Install bundler
+#   become: true
+#   gem:
+#     name: bundler
+#     version: 1.15.1
+#     state: present
+
+- name: Clean the mess
+  become: true
+  file:
+    path: "/tmp/{{ item }}"
+    state: absent
+  with_items:
+    - ruby-2.3.1.tar.bz2
+    - ruby-2.3.1
