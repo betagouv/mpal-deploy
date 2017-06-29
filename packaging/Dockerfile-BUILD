@@ -7,7 +7,7 @@ VOLUME /artifact
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y curl && \
-    apt-get install -y && \
+    apt-get install -y g++ && \
     apt-get install -y libicu-dev && \
     apt-get install -y && \
     apt-get install -y libpq-dev && \
@@ -22,7 +22,6 @@ RUN gem install bundler && \
     gem install foreman && \
     gem install rb-readline
 
-# TODO : scp the whole tar.bz2 to a NAS somewhere (when we have)
 WORKDIR /
 COPY build.sh .
 ENTRYPOINT ["/build.sh"]

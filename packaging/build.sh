@@ -15,18 +15,20 @@ git checkout ${COMMIT_ID}
 
 echo -e "\n"
 echo -e "#################################################"
-echo -e "Vendoring..."
+echo -e "Packaging..."
 echo -e "#################################################"
 rm -rf /mpal/vendor
 bundle install --path /mpal/vendor/bundle
+bundle package
 
 echo -e "\n"
 echo -e "#################################################"
 echo -e "Creating the archive"
 echo -e "#################################################"
 echo -e "\n"
-tar jcvf /artifact/anah_${COMMIT_ID}_${DATE}.tar.bz2 /mpal --exclude=.git
+ID_PACKAGE="${DATE}_${COMMIT_ID}"
+tar jcvf /artifact/anah_${ID_PACKAGE}.tar.bz2 /mpal --exclude=.git
 
 echo -e "\n\n"
 echo -e "DONE !"
-echo -e "Package name : anah_${COMMIT_ID}_${DATE}.tar.bz2"
+echo -e "Package name : anah_${ID_PACKAGE}.tar.bz2"
