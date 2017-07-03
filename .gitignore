@@ -9,3 +9,9 @@
 
 # Ignore the vendored webapp
 /roles/webapps/files/*
+
+# Ignore molecule working files
+**molecule**
+
+# Ignore vagrant working files
+*vagrant*
