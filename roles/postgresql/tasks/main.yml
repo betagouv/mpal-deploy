@@ -29,13 +29,26 @@
     name: postgresql-client-9.4
     state: present
 
+- name: Create the MPAL unix group
+  become: true
+  group:
+    name: mpal
+    state: present
+
+- name: Create the MPAL unix user
+  become: true
+  user:
+    name: mpal
+    group: mpal
+    shell: /bin/bash
+
 - name: Create the MPAL Postgres user
   become: true
   become_user: postgres
   postgresql_user:
     name: "{{ postgresql_mpal_username }}"
     password: "{{ postgresql_mpal_password }}"
-    role_attr_flags: SUPERUSER
+    role_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
     login_user: postgres
 
 - name: Create an empty MPAL database

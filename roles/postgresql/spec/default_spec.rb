@@ -1,7 +1,16 @@
 require 'spec_helper'
 
+# rubocop:disable BlockLength
 context 'PostgreSQL should run properly' do
   context 'As root' do
+    describe user('mpal') do
+      it { should exist }
+    end
+
+    describe group('mpal') do
+      it { should exist }
+    end
+
     describe file('/etc/postgresql/9.4/main/postgresql.conf') do
       it { should be_file }
       it { should be_owned_by 'postgres' }
@@ -16,8 +25,8 @@ context 'PostgreSQL should run properly' do
     end
   end
 
-  context 'As postgres user' do
-    let(:sudo_options) { '-u postgres' }
+  context 'As mpal user' do
+    let(:sudo_options) { '-u mpal' }
 
     describe command('/usr/bin/psql -c "\l" | grep mpal') do
       its(:stdout) { should contain 'mpal      | mpal     | UTF8' }
@@ -28,3 +37,4 @@ context 'PostgreSQL should run properly' do
     end
   end
 end
+# rubocop:enable BlockLength
