@@ -1,8 +1,0 @@
-redis-master ansible_connection=docker
-redis-slave ansible_connection=docker
-
-[redis-slave]
-redis-slave
-
-[redis-master]
-redis-master

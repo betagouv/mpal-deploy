@@ -1,4 +1,0 @@
-keepalived ansible_connection=docker
-
-[keepalived]
-keepalived

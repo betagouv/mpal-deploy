@@ -1,4 +1,0 @@
-ruby ansible_connection=docker
-
-[group1]
-ruby

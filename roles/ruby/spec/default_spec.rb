@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 context 'Ruby should be properly installed' do
-  packages = %w[build-essential make openssl]
+  packages = %w[libssl-dev zlib1g-dev libreadline-dev libgdbm-dev libcurl4-openssl-dev libicu-dev libpq-dev ]
   packages.each do |package|
     describe package(package.to_s) do
       it { should be_installed }
