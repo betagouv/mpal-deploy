@@ -14,4 +14,4 @@
 **molecule**
 
 # Ignore vagrant working files
-*vagrant*
+**vagrant**
