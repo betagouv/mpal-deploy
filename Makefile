@@ -1,4 +1,6 @@
 .PHONY: test
 
+
+
 tests: ## Run all molecule tests
-	@./tests.sh
+	@./molecule_tests.sh
