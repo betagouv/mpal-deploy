@@ -42,14 +42,19 @@
     state: present
   when: package is defined
 
-# - name: Configure the environement file
-#   become: true
-#   lineinfile:
-#     path: /mpal/{{ dot_env_conf }}
-#     regexp: "{{ item.regexp }}"
-#     line: "{{ item.line }}"
-#   with_items:
-#     - regexp: "^POSTGRES_IP_PORT="
-#       line: "POSTGRES_IP_PORT={{ postgresql_host_ip }}:{{ postgresql_host_port }}"
-#     - regexp: "^REDIS_IP_PORT={{ redis_host_ip }}:{{ redis_host_port }}"
-#   when: package is defined
+- name: Configure the environement file
+  become: true
+  lineinfile:
+    path: /mpal/{{ dot_env_conf }}
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - regexp: "^POSTGRES_HOST="
+      line: "POSTGRES_HOST={{ postgresql_host_ip }}"
+    - regexp: "^POSTGRES_PORT="
+      line: "POSTGRES_PORT={{ postgresql_host_port }}"
+    - regexp: "^REDIS_HOST="
+      line: "^REDIS_HOST={{ redis_host_ip }}"
+    - regexp: "^REDIS_PORT="
+      line: "REDIS_PORT={{ redis_host_port }}"
+  when: package is defined
