@@ -1,7 +1,7 @@
 # Deployement repo for the MPAL project
 
 ### First Setup
-Our beatiful snowflakes are provided by [MyEolas](https://www.eolas.fr/).
+Our virtual machines are provided by [MyEolas](https://www.eolas.fr/).
 
 All the infrastructure and interraction with _Eolas_ is accessible through a web ui : https://my.eolas.fr.
 
