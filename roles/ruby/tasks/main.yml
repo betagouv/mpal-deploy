@@ -1,21 +1,5 @@
 ---
 
-- name: Install packages needed to compile Ruby
-  become: true
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - 'make'
-    - 'build-essential'
-    - 'libssl-dev'
-    - 'zlib1g-dev'
-    - 'libreadline-dev'
-    - 'libgdbm-dev'
-    - 'libcurl4-openssl-dev'
-    - 'libicu-dev'
-    - 'libpq-dev'
-
 - name: Check if ruby is already installed
   become: true
   command: ruby -v
@@ -23,47 +7,14 @@
   changed_when: false
   failed_when: false
 
-- name: Downloads and untar ruby 2.3.1
+- name: Copy Ruby 2.3.1 debian package
   become: true
-  unarchive:
-    src: https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.bz2
+  copy:
+    src: ruby_2.3.1-1_amd64.deb
     dest: /tmp
-    remote_src: true
-    validate_certs: false
   when: ruby_version.rc != 0
 
-- name: Configure ruby
+- name: Install the package
   become: true
-  command: ./configure --with-openssl-dir=/usr/bin/ chdir=/tmp/ruby-2.3.1
+  command: dpkg -i /tmp/ruby_2.3.1-1_amd64.deb
   when: ruby_version.rc != 0
-
-- name: Make ruby
-  become: true
-  make:
-    chdir: /tmp/ruby-2.3.1
-  when: ruby_version.rc != 0
-
-- name: Install ruby
-  become: true
-  make:
-    chdir: /tmp/ruby-2.3.1
-    target: install
-  when: ruby_version.rc != 0
-
-- name: Clean the mess
-  become: true
-  file:
-    path: "/tmp/{{ item }}"
-    state: absent
-  with_items:
-    - ruby-2.3.1.tar.bz2
-    - ruby-2.3.1
-
-- name: Remove make and build-essential
-  become: true
-  apt:
-    name: "{{ item }}"
-    state: absent
-  with_items:
-    - 'make'
-    - 'build-essential'

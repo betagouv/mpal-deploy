@@ -43,3 +43,8 @@
         state: present
         regexp: "^%ansible"
         line: "%ansible ALL=(ALL) NOPASSWD: ALL"
+
+    - name: Remove pre installed ruby package
+      apt:
+        name: ruby
+        state: absent
