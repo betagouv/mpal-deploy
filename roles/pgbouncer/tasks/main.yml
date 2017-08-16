@@ -1,0 +1,45 @@
+---
+
+- name: Create the pgbouncer group
+  become: true
+  group:
+    name: pgbouncer
+    state: present
+
+- name: Create the pgbouncer user
+  become: true
+  user:
+    name: pgbouncer
+    group: pgbouncer
+    state: present
+
+- name: Install pgbouncer
+  become: true
+  apt:
+    name: pgbouncer
+    state: present
+
+- name: Create pgbouncer configuration directory
+  become: true
+  file:
+    path: /etc/pgbouncer
+    state: directory
+    owner: pgbouncer
+    group: pgbouncer
+    mode: 0750
+
+- name: Configure pgbouncer
+  become: true
+  template:
+    src: pgbouncer.ini.j2
+    dest: /etc/pgbouncer/pgbouncer.ini
+    owner: pgbouncer
+    group: pgbouncer
+    mode: 0640
+
+- name: Start pgbouncer
+  become: true
+  service:
+    name: pgbouncer
+    state: started
+    enabled: yes

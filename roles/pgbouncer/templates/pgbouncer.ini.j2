@@ -1,0 +1,11 @@
+[databases]
+mpal = host={{ pgbouncer_db_host }} port={{ pgboucner_db_port }} dbname={{ pgbouncer_db_name }}
+
+[pgbouncer]
+listen_port = {{ pgbouncer_listen_port }}
+listen_addr = {{ pgbouncer_listen_ip }}
+auth_type = md5
+auth_file = users.txt
+logfile = /var/log/pgbouncer.log
+pidfile = pgbouncer.pid
+admin_users = {{ pgbouncer_admin_users }}

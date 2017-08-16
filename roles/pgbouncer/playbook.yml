@@ -1,0 +1,10 @@
+---
+- hosts: all
+  roles:
+    - role: pgbouncer
+      pgbouncer_db_host: 'pgbouncer_db_host'
+      pgboucner_db_port: 'pgboucner_db_port'
+      pgbouncer_db_name: 'pgbouncer_db_name'
+      pgbouncer_listen_port: 'pg_bouncer_listen_port'
+      pgbouncer_listen_ip: 'pgbouncer_listen_ip'
+      pgbouncer_admin_users: 'pgbouncer_admin_users'
