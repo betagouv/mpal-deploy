@@ -1,60 +1,32 @@
 ---
 
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  changed_when: false
+
 - name: Install some stuff the app needs and I do not know why
-  become: true
   apt:
     name: "{{ item }}"
     state: present
     update_cache: yes
   with_items:
+    - 'libv8-3.14.5'
     - 'nodejs'
     - 'build-essential'
     - 'qt5-default'
     - 'libqt5webkit5-dev'
     - 'libpq5'
+    - 'libpq-dev'
 
-- name: Unpack the app
-  become: true
-  unarchive:
-    src: "{{ package }}.tar.bz2"
-    dest: /
-  when: package is defined
+- block:
+    - name: Unpack the app
+      unarchive:
+        src: "{{ package }}.tar.bz2"
+        dest: /home/mpal
 
-- name: Check if bundler is installed
-  become: true
-  command: which bundle
-  register: bundler_installed
-  failed_when: false
-  changed_when: false
-  when: package is defined
+    - include: bundle.yml
+    - include: systemd.yml
 
-- name: Install bundler
-  become: true
-  command: gem install bundler -v 1.15.1
-  when: package is defined and bundler_installed.rc != 0
-
-- name: Install the vendored gems
-  become: true
-  bundler:
-    chdir: /mpal
-    executable: /mpal/bin/bundle
-    deployment_mode: true
-    state: present
-  when: package is defined
-
-- name: Configure the environement file
-  become: true
-  lineinfile:
-    path: /mpal/{{ dot_env_conf }}
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-  with_items:
-    - regexp: "^POSTGRES_HOST="
-      line: "POSTGRES_HOST={{ postgresql_host_ip }}"
-    - regexp: "^POSTGRES_PORT="
-      line: "POSTGRES_PORT={{ postgresql_host_port }}"
-    - regexp: "^REDIS_HOST="
-      line: "^REDIS_HOST={{ redis_host_ip }}"
-    - regexp: "^REDIS_PORT="
-      line: "REDIS_PORT={{ redis_host_port }}"
+    - notify: Start MPAL
   when: package is defined

@@ -1,0 +1,15 @@
+---
+- name: Create MPAL systemd unit file
+  template:
+    src: mpal-web.service.j2
+    dest: /etc/systemd/system/mpal-web.service
+
+- name: Create MPAL environment variable file
+  template:
+    src: mpal-web.j2
+    dest: "{{ webapp_env_var }}"
+
+- name: Enable MPAL service
+  service:
+    name: mpal-web
+    state: enabled

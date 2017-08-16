@@ -1,0 +1,36 @@
+---
+- name: Check if bundler is installed
+  become: true
+  become_user: mpal
+  become_method: sudo
+  command: which bundle
+  args:
+    chdir: /home/mpal/mpal-webapp
+  environment:
+    PATH: /home/mpal/.rbenv/bin:/home/mpal/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  register: bundler_installed
+  failed_when: false
+  changed_when: false
+
+- name: Install bundler
+  become: true
+  become_user: mpal
+  become_method: sudo
+  command: gem install bundler -v 1.15.1
+  args:
+    chdir: /home/mpal/mpal-webapp
+  environment:
+    PATH: /home/mpal/.rbenv/bin:/home/mpal/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  when: bundler_installed.rc != 0
+
+- name: Install the vendored gems
+  become: true
+  become_user: mpal
+  become_method: sudo
+  bundler:
+    chdir: /home/mpal/mpal-webapp
+    deployment_mode: true
+    state: present
+  environment:
+    PATH: /home/mpal/.rbenv/bin:/home/mpal/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  when: bundler_installed.rc != 0

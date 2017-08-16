@@ -1,0 +1,23 @@
+[Unit]
+Description=MPAL Web Application
+Requires=network.target
+
+[Service]
+Type=simple
+User=mpal
+Group=mpal
+EnvironmentFile={{ webapp_env_var }}
+WorkingDirectory=/home/mpal/mpal-webapp
+ExecStartPre=/usr/bin/bash -lc 'POSTGRES_HOST={{ groups['postgresql'][0]['ansible_ssh_host'] }} \
+                                POSTGRES_PORT=5432 \
+                                POSTGRES_DATABASE='{{ postgresql_mpal_db_name }}' \
+                                POSTGRES_USERNAME='{{ postgresql_mpal_username }}' \
+                                POSTGRES_PASSWORD='{{ postgresql_mpal_password }}' \
+                                bundle exec rake db:migrate RAILS_ENV={{ webapp_rails_env }}'
+ExecStart=/usr/bin/bash -lc 'bundle exec foreman start'
+TimeoutSec=60
+RestartSec=15s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
