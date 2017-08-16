@@ -1,0 +1,45 @@
+---
+
+- name: fetch master's public key
+  fetch:
+    src: /home/postgres/.ssh/id_rsa.pub
+    dest: /tmp/master_{{ repmgr_cluster_name }}_id_rsa.pub
+    flat: yes
+  when: (postgresql_master | bool)
+
+- name: lookup master's public key
+  become: false
+  local_action: command cat /tmp/master_{{ repmgr_cluster_name }}_id_rsa.pub
+  changed_when: false
+  register: master_public_key
+
+- name: fetch standby's public key
+  fetch:
+    src: /home/postgres/.ssh/id_rsa.pub
+    dest: /tmp/standby_{{ repmgr_cluster_name }}_id_rsa.pub
+    flat: yes
+  when: not (postgresql_master | bool)
+
+- name: lookup standby's public key
+  become: false
+  local_action: command cat /tmp/standby_{{ repmgr_cluster_name }}_id_rsa.pub
+  changed_when: false
+  register: standby_public_key
+
+- name: append master's public key to standby authorized_keys
+  authorized_key:
+    user: postgres
+    state: present
+    key: "{{ master_public_key.stdout }}"
+  when: not (postgresql_master | bool)
+
+- name: append standby's public key to master authorized_keys
+  authorized_key:
+    user: postgres
+    state: present
+    key: "{{ standby_public_key.stdout }}"
+  when: (postgresql_master | bool)
+
+# - name: clean known public keys
+#   become: false
+#   local_action: command rm -f /tmp/*{{ repmgr_cluster_name }}_id_rsa.pub

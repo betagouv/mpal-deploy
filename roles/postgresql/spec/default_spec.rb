@@ -3,14 +3,6 @@ require 'spec_helper'
 # rubocop:disable BlockLength
 context 'PostgreSQL should run properly' do
   context 'As root' do
-    describe user('mpal') do
-      it { should exist }
-    end
-
-    describe group('mpal') do
-      it { should exist }
-    end
-
     describe file('/etc/postgresql/9.4/main/postgresql.conf') do
       it { should be_file }
       it { should be_owned_by 'postgres' }
@@ -22,6 +14,14 @@ context 'PostgreSQL should run properly' do
     describe service('postgresql') do
       it { should be_running }
       it { should be_enabled }
+    end
+
+    describe user('mpal') do
+      it { should exist }
+    end
+
+    describe group('mpal') do
+      it { should exist }
     end
   end
 

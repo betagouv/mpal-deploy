@@ -1,0 +1,26 @@
+---
+
+- name: Create the repmgr group
+  become: true
+  group:
+    name: repmgr
+    state: present
+
+- name: Create the repmgr user
+  become: true
+  user:
+    name: repmgr
+    group: repmgr
+    state: present
+
+- name: create repmgr configuration directory
+  file:
+    path: /etc/repmgr
+    state: directory
+    owner: repmgr
+    group: repmgr
+
+- name: configure repmgr
+  template:
+    src: repmgr.conf.j2
+    dest: /etc/repmgr/repmgr.conf

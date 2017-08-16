@@ -1,0 +1,66 @@
+---
+
+- name: Configure the master node
+  lineinfile:
+    path: /etc/postgresql/9.4/main/postgresql.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - regexp: "^#?wal_level =.*$"
+      line: "wal_level = 'hot_standby'"
+    - regexp: "^#?wal_keep_segments =.*$"
+      line: "wal_keep_segments = 5000"
+    - regexp: "^#?archive_mode =.*$"
+      line: "archive_mode = on"
+    - regexp: "^#?archive_command =.*$"
+      line: "archive_command = 'cd .'"
+    - regexp: "^#?max_wal_senders =.*$"
+      line: "max_wal_senders = 10"
+    - regexp: "^#?max_replication_slots =.*$"
+      line: "max_replication_slots = 1"
+    - regexp: "^#?hot_standby =.*$"
+      line: "hot_standby = on"
+    - regexp: "^#?shared_preload_libraries =.*$"
+      line: "shared_preload_libraries = 'repmgr_funcs'"
+
+- name: Configure access to the master node
+  template:
+    src: pg_hba.conf.j2
+    dest: /etc/postgresql/9.4/main/pg_hba.conf
+
+- block:
+    - name: Create the repmgr Postgres user
+      become: true
+      become_user: postgres
+      postgresql_user:
+        name: "repmgr"
+        role_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB
+        login_user: postgres
+
+    - name: Create an empty repmgr database
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: "repmgr"
+        owner: "repmgr"
+        encoding: UTF-8
+        login_user: postgres
+  when: groups['postgresql'] | length > 1
+
+- name: Create the MPAL Postgres user
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name: "{{ postgresql_mpal_username }}"
+    password: "{{ postgresql_mpal_password }}"
+    role_attr_flags: "{{ postgresql_mpal_attr_flags }}"
+    login_user: postgres
+
+- name: Create an empty MPAL database
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ postgresql_mpal_db_name }}"
+    owner: "{{ postgresql_mpal_username }}"
+    encoding: UTF-8
+    login_user: postgres

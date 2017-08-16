@@ -1,7 +1,7 @@
 ---
 - hosts: all
   roles:
-    - role: postgresql
+    - role: master
       postgresql_mpal_username: mpal
       postgresql_mpal_password: mpal
       postgresql_mpal_db_name: mpal
