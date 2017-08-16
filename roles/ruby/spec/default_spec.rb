@@ -1,16 +1,12 @@
 require 'spec_helper'
 
 context 'Ruby should be properly installed' do
-  describe command('ruby -v') do
+  # rubocop:disable LineLength
+  let(:path) { '/home/mpal/.rbenv/bin:/home/mpal/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games' }
+  # rubocop:enable LineLength
+  set :sudo_options, '-u mpal -i'
+
+  describe command('rbenv global 2.3.1 && ruby -v') do
     its(:stdout) { should contain 'ruby 2.3.1' }
-  end
-
-  describe file('/tmp/ruby-2.3.1.tar.bz2') do
-    it { should_not be_file }
-  end
-
-  describe file('/tmp/ruby-2.3.1') do
-    it { should_not be_file }
-    it { should_not be_directory }
   end
 end

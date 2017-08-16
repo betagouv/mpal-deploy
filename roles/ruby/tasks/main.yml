@@ -1,20 +1,71 @@
 ---
 
-- name: Check if ruby is already installed
-  become: true
-  command: ruby -v
-  register: ruby_version
+- name: Create mpal group
+  group:
+    name: mpal
+    state: present
+
+- name: Create the mpal user
+  user:
+    name: mpal
+    group: mpal
+    shell: /bin/bash
+
+- name: Check if rbenv is already installed
+  command: /home/mpal/.rbenv/bin/rbenv --version
+  register: rbenv_version
   changed_when: false
   failed_when: false
 
-- name: Copy Ruby 2.3.1 debian package
-  become: true
-  copy:
-    src: ruby_2.3.1-1_amd64.deb
-    dest: /tmp
-  when: ruby_version.rc != 0
+- block:
+    - name: Install libraries needed to clone/install rbenv
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - git-core
+        - autoconf
+        - bison
+        - build-essential
+        - libssl-dev
+        - libyaml-dev
+        - libreadline6-dev
+        - zlib1g-dev
+        - libncurses5-dev
+        - libffi-dev
+        - libgdbm3
+        - libgdbm-dev
 
-- name: Install the package
-  become: true
-  command: dpkg -i /tmp/ruby_2.3.1-1_amd64.deb
-  when: ruby_version.rc != 0
+    - name: Install rbenv under mpal user
+      git:
+        repo: 'https://github.com/rbenv/rbenv.git'
+        dest:  /home/mpal/.rbenv
+        version: v1.1.1
+
+    - name: Install ruby-build extension
+      git:
+        repo: 'https://github.com/rbenv/ruby-build.git'
+        dest: /home/mpal/.rbenv/plugins/ruby-build
+        version: v20170726
+
+    - name: Make rbenv belong to mpal
+      file:
+        path: /home/mpal/.rbenv
+        owner: mpal
+        group: mpal
+        mode: 0755
+
+    - name: Check if ruby is already installed
+      become: true
+      become_user: mpal
+      command: /home/mpal/.rbenv/versions/2.3.1/bin/ruby --version
+      changed_when: false
+      failed_when: false
+      register: ruby_version
+
+    - name: Install ruby 2.3.1
+      become: true
+      become_user: mpal
+      command: /home/mpal/.rbenv/bin/rbenv install 2.3.1
+      when: ruby_version.rc != 0
+  when: not ('rbenv 1.1.1' in rbenv_version)

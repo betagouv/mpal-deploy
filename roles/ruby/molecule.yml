@@ -2,13 +2,20 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
-docker:
-  containers:
-    - name: ruby
-      image: debian
-      image_version: jessie
+  name: vagrant
+vagrant:
+  platforms:
+    - name: jessie64
+      box: debian/jessie64
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 2
+  instances:
+    - name: molecule-ruby
       ansible_groups:
-        - group1
+        - ruby
 verifier:
   name: serverspec
