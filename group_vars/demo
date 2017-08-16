@@ -1,10 +1,14 @@
 ---
+###############
+# keepalived
 keepalived_vip: '10.66.212.14'
 keepalived_configurations:
   - keepalived_instance: '1'
     keepalived_interface: 'eth0'
     keepalived_priority: '150'
 
+############
+# haproxy
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
 haproxy_frontend_port: 80
@@ -15,6 +19,8 @@ haproxy_backend_servers:
   - name: 'be-demat-webapp2'
     fqdn: '10.66.212.12'
 
+##########
+# redis
 redis_host_ip: 10.66.212.13
 redis_host_port: 6379
 redis_password: foobar
@@ -22,12 +28,22 @@ redis_master_conf:
   ip: 10.66.212.13
   password: '{{ redis_password }}'
 
+#############
+# postgres
 postgresql_host_ip: 10.66.212.13
 postgresql_host_port: 5432
+postgresql_mpal_db_name: mpal
+postgresql_mpal_username: mpal
 postgresql_mpal_password: mpal
+postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
+postgresql_webapp_cidr: 10.66.212.0/24
 
-dot_env_conf: .env.demo
+############
+# webapps
+dot_env_conf: .env.production
 
+########
+# ssh
 users:
   - name: apeze
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIvIAo7M1dvIeAn3EzJ7z7Nt37i1jEcGxUC/sMVO4cvBZM063RS1JT7SgEkKq9jdR7+USBMFFGDkP965Xljw5h4N2KQ3xyt2DvVR9CRrhn690NgdsVRjHPcFvAkRu6glhTGCXm8Uwfg4HlGnYSxeJs75sp9jWIr1t9eq1SITpvAw5mFPtwhLDLtQ6npAtueL/0QD0JS2awJFMtsfoP13HKna1VljF2Gj2IZ74ElHVxvA7uOLTrVqYmDWyWj4/3YEzpXDxyvVoNW0/NvwWi+5i+qObXmycB8fnvijkj/WXQpsOoCIY+j5dsFL15VT57XDSbODCZ7OO9MlR8cakoLie/ .peze&octo.com

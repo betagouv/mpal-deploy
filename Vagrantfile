@@ -10,32 +10,44 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "load-balancer-1" do |lb|
     lb.vm.box = box_image
+    lb.vm.hostname = "load-balancer-1"
     lb.vm.network "private_network", ip: "10.0.1.2"
   end
 
   config.vm.define "load-balancer-2" do |lb|
     lb.vm.box = box_image
+    lb.vm.hostname = "load-balancer-2"
     lb.vm.network "private_network", ip: "10.0.1.3"
   end
 
   config.vm.define "web-1" do |web|
     web.vm.box = box_image
+    web.vm.hostname = "web-1"
     web.vm.network "private_network", ip: "10.0.1.4"
   end
 
   config.vm.define "web-2" do |web|
     web.vm.box = box_image
+    web.vm.hostname = "web-2"
     web.vm.network "private_network", ip: "10.0.1.5"
   end
 
   config.vm.define "backend-1" do |backend|
     backend.vm.box = box_image
+    backend.vm.hostname = "backend-1"
     backend.vm.network "private_network", ip: "10.0.1.6"
   end
 
   config.vm.define "backend-2" do |backend|
     backend.vm.box = box_image
+    backend.vm.hostname = "backend-2"
     backend.vm.network "private_network", ip: "10.0.1.7"
+  end
+
+  config.vm.define "ruby-builder" do |backend|
+    backend.vm.box = box_image
+    backend.vm.hostname = "ruby-builder"
+    backend.vm.network "private_network", ip: "10.0.1.8"
   end
 
 end

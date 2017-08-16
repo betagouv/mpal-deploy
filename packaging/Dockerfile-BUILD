@@ -22,6 +22,12 @@ RUN gem install bundler && \
     gem install foreman && \
     gem install rb-readline
 
-WORKDIR /
-COPY build.sh .
-ENTRYPOINT ["/build.sh"]
+# Create the mpal group and user and then use it
+RUN groupadd mpal && useradd -g mpal -m mpal
+
+COPY build.sh /home/mpal
+RUN chown mpal:mpal /home/mpal/build.sh
+
+USER mpal
+WORKDIR /home/mpal
+ENTRYPOINT ["/home/mpal/build.sh"]

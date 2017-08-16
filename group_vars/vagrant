@@ -1,4 +1,6 @@
 ---
+###############
+# Keepalived
 keepalived_vip: '10.0.1.66'
 keepalived_configurations:
   - keepalived_instance: '1'
@@ -8,6 +10,8 @@ keepalived_configurations:
     keepalived_interface: 'eth1'
     keepalived_priority: '100'
 
+#############
+# HA Proxy
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
 haproxy_frontend_port: 80
@@ -19,13 +23,33 @@ haproxy_backend_servers:
   - name: 'be-test-haproxy-cpc'
     fqdn: '163.172.103.177'
 
+
+##########
+# Redis
 redis_password: foobar
 redis_master_conf:
-  ip: 10.0.1.6
+  ip: 10.0.1.7
   password: '{{ redis_password }}'
 redis_slaves_conf:
   - ip: "{{ inventory_hostname }}"
     password: "{{ redis_password }}"
     master_password: "{{ redis_password }}"
 
+###################
+# PostgreSQL
+postgresql_mpal_db_name: mpal
+postgresql_mpal_username: mpal
 postgresql_mpal_password: mpal
+postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
+postgresql_webapp_cidr: 10.0.1.0/24
+
+
+###########
+# repmgr
+repmgr_cluster_name: vagrant_cluster
+
+
+############
+# webapps
+dot_env_conf: test
+webapp_rails_env: development

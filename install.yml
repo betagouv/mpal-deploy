@@ -9,13 +9,13 @@
     - name: repos
       tags: load-balancers, repos
     - name: haproxy
-      tags: load-balancer, haproxy
+      tags: load-balancers, haproxy
 
 - hosts: load-balancers
   serial: 1
   roles:
     - name: keepalived
-      tags: load-balancer, keepalived
+      tags: load-balancers, keepalived
 
 - hosts: postgresql
   roles:

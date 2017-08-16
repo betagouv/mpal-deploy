@@ -1,0 +1,35 @@
+---
+
+- hosts: ruby-builder
+  tasks:
+    - name: Ensure checkinstall, openssl, zlibc, zlib1g-dev and zlib1g are installed
+      become: true
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - checkinstall
+        - openssl
+        - zlibc
+        - zlib1g-dev
+        - zlib1g
+
+    - name: Downloads and untar ruby 2.3.1
+      become: true
+      unarchive:
+        src: https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.bz2
+        dest: /tmp
+        remote_src: true
+        validate_certs: false
+
+    - name: Configure ruby
+      become: true
+      command: ./configure --with-openssl-dir=/usr/bin/ chdir=/tmp/ruby-2.3.1
+
+    - name: Make ruby
+      become: true
+      make:
+        chdir: /tmp/ruby-2.3.1
+
+    - pause:
+        prompt: "Inside the vagrant VM (vagrant ssh ruby-builder), run 'cd /tmp/ruby-2.3.1 && checkinstall --type=debian --install=yes --fstrans=no'. Pay attention to the prompt checkinstall displays to you. Press ENTER when you are done."

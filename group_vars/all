@@ -14,3 +14,5 @@ redis_slaves_conf: []
 
 postgresql_mpal_username: mpal
 postgresql_mpal_db_name: mpal
+
+webapp_env_var: /var/run/mpal-web

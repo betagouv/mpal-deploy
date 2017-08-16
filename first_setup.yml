@@ -31,7 +31,7 @@
 
     - name: Create the authorized file key
       copy:
-        content: "{{ ansible_public_key }}"
+        src: "{{ ansible_public_key }}"
         dest: "/home/ansible/.ssh/authorized_keys"
         owner: ansible
         group: ansible
@@ -41,8 +41,8 @@
       lineinfile:
         dest: /etc/sudoers
         state: present
-        regexp: "^%ansible"
-        line: "%ansible ALL=(ALL) NOPASSWD: ALL"
+        regexp: "^%{{ ansible_user }}"
+        line: "%{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
 
     - name: Remove pre installed ruby package
       apt:
