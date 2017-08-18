@@ -8,13 +8,8 @@ User=mpal
 Group=mpal
 EnvironmentFile={{ webapp_env_var }}
 WorkingDirectory=/home/mpal/mpal-webapp
-ExecStartPre=/usr/bin/bash -lc 'POSTGRES_HOST={{ groups['postgresql'][0]['ansible_ssh_host'] }} \
-                                POSTGRES_PORT=5432 \
-                                POSTGRES_DATABASE='{{ postgresql_mpal_db_name }}' \
-                                POSTGRES_USERNAME='{{ postgresql_mpal_username }}' \
-                                POSTGRES_PASSWORD='{{ postgresql_mpal_password }}' \
-                                bundle exec rake db:migrate RAILS_ENV={{ webapp_rails_env }}'
-ExecStart=/usr/bin/bash -lc 'bundle exec foreman start'
+ExecStartPre=/bin/bash -c -l '/home/mpal/.rbenv/shims/bundle exec rake db:migrate db:seed after_party:run RAILS_ENV={{ webapp_rails_env }}'
+ExecStart=/bin/bash -c -l '/home/mpal/.rbenv/shims/bundle exec rails server -p $PORT -b 0.0.0.0'
 TimeoutSec=60
 RestartSec=15s
 Restart=always

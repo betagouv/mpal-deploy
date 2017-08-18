@@ -1,6 +1,0 @@
----
-
-- name: Start MPAL
-  service:
-    name: mpal-web
-    state: started

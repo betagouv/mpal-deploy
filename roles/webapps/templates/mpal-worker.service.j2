@@ -1,0 +1,17 @@
+[Unit]
+Description=MPAL Sidekiq worker
+Requires=network.target
+
+[Service]
+Type=simple
+User=mpal
+Group=mpal
+EnvironmentFile={{ webapp_env_var }}
+WorkingDirectory=/home/mpal/mpal-webapp
+ExecStart=/bin/bash -c -l '/home/mpal/.rbenv/shims/bundle exec sidekiq -q default -q mailers'
+TimeoutSec=60
+RestartSec=15s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

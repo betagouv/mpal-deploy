@@ -1,0 +1,13 @@
+---
+- name: Unpack the app
+  unarchive:
+    src: "{{ package }}.tar.bz2"
+    dest: /home/mpal
+
+- name: Create the mpal tmp/cache directory
+  file:
+    path: /home/mpal/mpal-webapp/tmp/cache
+    state: directory
+    owner: mpal
+    group: mpal
+    mode: 0755

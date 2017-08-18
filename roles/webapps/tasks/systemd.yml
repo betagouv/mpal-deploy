@@ -1,15 +1,26 @@
 ---
-- name: Create MPAL systemd unit file
+- name: Install systemd unit files
   template:
-    src: mpal-web.service.j2
-    dest: /etc/systemd/system/mpal-web.service
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+  with_items:
+    - src: mpal-web.service.j2
+      dest: /etc/systemd/system/mpal-web.service
+    - src: mpal-worker.service.j2
+      dest: /etc/systemd/system/mpal-worker.service
 
 - name: Create MPAL environment variable file
   template:
     src: mpal-web.j2
     dest: "{{ webapp_env_var }}"
 
-- name: Enable MPAL service
+- name: Enable MPAL services
   service:
-    name: mpal-web
-    state: enabled
+    name: "{{ item }}"
+    enabled: yes
+    daemon_reload: yes
+    state: stopped
+  with_items:
+    - mpal-web
+    - mpal-worker

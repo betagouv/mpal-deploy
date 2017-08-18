@@ -5,7 +5,7 @@
     update_cache: yes
   changed_when: false
 
-- name: Install some stuff the app needs and I do not know why
+- name: Install some stuff the app needs
   apt:
     name: "{{ item }}"
     state: present
@@ -20,13 +20,22 @@
     - 'libpq-dev'
 
 - block:
-    - name: Unpack the app
-      unarchive:
-        src: "{{ package }}.tar.bz2"
-        dest: /home/mpal
+    - include: install.yml
+      tags: install-webapp
 
     - include: bundle.yml
-    - include: systemd.yml
+      tags: bundle
 
-    - notify: Start MPAL
+    - include: systemd.yml
+      tags: systemd
+
+    - name: start mpal-web
+      service:
+        name: mpal-web
+        state: started
+
+    - name: start mpal-worker
+      service:
+        name: mpal-worker
+        state: started
   when: package is defined
