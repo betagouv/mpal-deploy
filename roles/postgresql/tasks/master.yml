@@ -30,7 +30,6 @@
 
 - block:
     - name: Create the repmgr Postgres user
-      become: true
       become_user: postgres
       postgresql_user:
         name: "repmgr"
@@ -38,7 +37,6 @@
         login_user: postgres
 
     - name: Create an empty repmgr database
-      become: true
       become_user: postgres
       postgresql_db:
         name: "repmgr"
@@ -48,7 +46,6 @@
   when: groups['postgresql'] | length > 1
 
 - name: Create the MPAL Postgres user
-  become: true
   become_user: postgres
   postgresql_user:
     name: "{{ postgresql_mpal_username }}"
@@ -57,7 +54,6 @@
     login_user: postgres
 
 - name: Create an empty MPAL database
-  become: true
   become_user: postgres
   postgresql_db:
     name: "{{ postgresql_mpal_db_name }}"

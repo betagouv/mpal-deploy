@@ -1,25 +1,21 @@
 ---
 
 - name: Install keepalived
-  become: true
   apt:
     name: keepalived
     state: present
 
 - name: Add keepalived group
-  become: true
   group:
     name: keepalived
     state: present
 
 - name: Add keepalived user
-  become: true
   user:
     name: keepalived
     state: present
 
 - name: Confiure keepalived
-  become: true
   template:
     src: keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf

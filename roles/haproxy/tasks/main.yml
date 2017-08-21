@@ -1,13 +1,11 @@
 ---
 
 - name: Install haproxy
-  become: true
   apt:
     name: haproxy
     state: present
 
 - name: Configures sysctl to enable non-local ip binding (sysctl.conf)
-  become: true
   sysctl:
     name: net.ipv4.ip_nonlocal_bind
     value: 1
@@ -15,7 +13,6 @@
     reload: yes
 
 - name: Configure haproxy
-  become: true
   template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
@@ -24,7 +21,6 @@
   notify: reload haproxy
 
 - name: Activates haproxy service
-  become: true
   service:
     name: haproxy
     enabled: yes

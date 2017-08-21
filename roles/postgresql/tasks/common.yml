@@ -1,20 +1,17 @@
 ---
 
 - name: Create the postgres group
-  become: true
   group:
     name: postgres
     state: present
 
 - name: Create the postgres user
-  become: true
   user:
     name: postgres
     generate_ssh_key: true
     group: postgres
 
 - name: Install PostgreSQL, libpq, psycopg2, PostgreSQL client
-  become: true
   apt:
     name: "{{ item }}"
     state: present
@@ -27,13 +24,11 @@
     - python-psycopg2
 
 - name: Create the MPAL group
-  become: true
   group:
     name: mpal
     state: present
 
 - name: Create the MPAL user
-  become: true
   user:
     name: mpal
     group: mpal

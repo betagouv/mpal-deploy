@@ -1,13 +1,11 @@
 ---
 
 - name: Create the repmgr group
-  become: true
   group:
     name: repmgr
     state: present
 
 - name: Create the repmgr user
-  become: true
   user:
     name: repmgr
     group: repmgr

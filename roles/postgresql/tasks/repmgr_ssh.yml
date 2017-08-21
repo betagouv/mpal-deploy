@@ -1,5 +1,9 @@
 ---
 
+- name: clean known public keys
+  become: false
+  local_action: command rm -f /tmp/*{{ repmgr_cluster_name }}_id_rsa.pub
+
 - name: fetch master's public key
   fetch:
     src: /home/postgres/.ssh/id_rsa.pub
@@ -39,7 +43,3 @@
     state: present
     key: "{{ standby_public_key.stdout }}"
   when: (postgresql_master | bool)
-
-# - name: clean known public keys
-#   become: false
-#   local_action: command rm -f /tmp/*{{ repmgr_cluster_name }}_id_rsa.pub

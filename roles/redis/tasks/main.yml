@@ -1,14 +1,12 @@
 ---
 
 - name: Install Redis server
-  become: true
   apt:
     name: redis-server
     state: present
   tags: [backends, redis]
 
 - name: Configures Redis master
-  become: true
   template:
     src: redis.conf.j2
     dest: /etc/redis/redis.conf
@@ -22,7 +20,6 @@
   tags: [backends, redis, redis-master]
 
 - name: Configures Redis slave(s)
-  become: true
   template:
     src: redis.conf.j2
     dest: /etc/redis/redis.conf
