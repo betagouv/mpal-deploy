@@ -32,7 +32,6 @@ redis_master_conf:
 # postgres
 postgresql_host_ip: 10.66.212.13
 postgresql_host_port: 5432
-postgresql_mpal_db_name: mpal
 postgresql_mpal_username: mpal
 postgresql_mpal_password: mpal
 postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION

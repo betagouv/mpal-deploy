@@ -1,4 +1,6 @@
 ---
+############
+# haproxy
 haproxy_frontends:
   - name: '{{ haproxy_frontend_name }}'
     ip: '{{ haproxy_frontend_ip }}'
@@ -9,10 +11,24 @@ haproxy_backends:
  - name: '{{ haproxy_backend_name }}'
    servers: '{{ haproxy_backend_servers }}'
 
+##########
+# redis
 redis_master_conf: {}
 redis_slaves_conf: []
 
+###############
+# postgresql
 postgresql_mpal_username: mpal
 postgresql_mpal_db_name: mpal
 
+##############
+# pgbouncer
+pgbouncer_listen_port: 6543
+pgbouncer_listen_ip: "{{ postgresql_master_ip }}"
+pgbouncer_db_host: "{{ postgresql_master_ip }}"
+pgboucner_db_port: 5432
+pgbouncer_db_name: "{{ postgresql_mpal_db_name }}"
+
+###########
+# webapp
 webapp_env_var: /var/run/mpal-web

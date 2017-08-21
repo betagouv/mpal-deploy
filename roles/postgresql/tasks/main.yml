@@ -35,6 +35,6 @@
   when: groups['postgresql'] | length > 1
   tags: repmgr
 
-# - include: pgbouncer.yml
-#   when: groups['postgresql'] | length > 1
-#   tags: pgbouncer
+- include: pgbouncer.yml
+  when: groups['postgresql'] | length > 1
+  tags: pgbouncer
