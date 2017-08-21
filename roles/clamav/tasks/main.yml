@@ -1,0 +1,63 @@
+---
+- name: Install clamav
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - clamav
+    - clamav-freshclam
+    - clamav-daemon
+
+- name: Stop daemons
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items:
+    - clamav-freshclam
+    - clamav-daemon
+
+- name: Create the clamav group
+  group:
+    name: clamav
+    state: present
+
+- name: Create the clamav user
+  user:
+    name: clamav
+    group: clamav
+    shell: /bin/bash
+
+- name: Create the clamav directory
+  file:
+    path: /usr/local/etc/clamav/
+    state: directory
+    owner: clamav
+    group: clamav
+    mode: 0755
+
+- name: Configure clamav
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: clamav
+    group: clamav
+    mode: 0644
+  with_items:
+    - src: clamd.conf
+      dest: /usr/local/etc/clamav/clamd.conf
+    - src: freshclam.conf
+      dest: /usr/local/etc/clamav/freshclam.conf
+
+- name: Download virus database
+  become: true
+  become_user: clamav
+  become_method: sudo
+  command: freshclam
+
+- name: Start daemons
+  service:
+    name: "{{ item }}"
+    state: started
+  with_items:
+    - clamav-freshclam
+    - clamav-daemon
