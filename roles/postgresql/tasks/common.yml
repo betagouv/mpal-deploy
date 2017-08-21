@@ -10,6 +10,7 @@
     name: postgres
     generate_ssh_key: true
     group: postgres
+    shell: /bin/bash
 
 - name: Install PostgreSQL, libpq, psycopg2, PostgreSQL client
   apt:
