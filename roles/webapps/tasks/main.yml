@@ -20,6 +20,9 @@
     - 'libpq-dev'
 
 - block:
+    - include: clean.yml
+      tags: clean-webapp
+
     - include: install.yml
       tags: install-webapp
 

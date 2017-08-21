@@ -1,0 +1,14 @@
+---
+
+- name: stop mpal-web and mpal-worker
+  service:
+    name: "{{ item }}"
+    state: stopped
+  with_items:
+    - mpal-web
+    - mpal-worker
+
+- name: remove mpal application's directory
+  file:
+    path: /home/mpal/mpal-webapp
+    state: absent
