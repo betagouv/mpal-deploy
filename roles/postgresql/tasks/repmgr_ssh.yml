@@ -43,3 +43,35 @@
     state: present
     key: "{{ standby_public_key.stdout }}"
   when: (postgresql_master | bool)
+
+- name: create known_hosts files
+  file:
+    path: /home/postgres/.ssh/known_hosts
+    owner: postgres
+    group: postgres
+    mode: 0600
+    state: touch
+
+- name: register ssh master identity
+  become: false
+  local_action: "command ssh-keyscan {{ postgresql_master_ip }}"
+  register: ssh_master_identity
+  changed_when: false
+
+- name: register ssh standby identity
+  become: false
+  local_action: "command ssh-keyscan {{ postgresql_standby_ip }}"
+  register: ssh_standby_identity
+  changed_when: false
+
+- name: append ssh master identity to standby known_hosts
+  copy:
+    dest: /home/postgres/.ssh/known_hosts
+    content: "{{ ssh_master_identity.stdout }}"
+  when: not (postgresql_master | bool)
+
+- name: append ssh standby identity to master known_hosts
+  copy:
+    dest: /home/postgres/.ssh/known_hosts
+    content: "{{ ssh_standby_identity.stdout }}"
+  when: (postgresql_master | bool)

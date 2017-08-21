@@ -14,12 +14,27 @@
 - include: master.yml
   when: postgresql_master
 
+- name: restart postgresql
+  service:
+    name: postgresql
+    state: restarted
+
 - block:
   - name: setup ssh
     include: repmgr_ssh.yml
+    tags: repmgr-ssh
+
   - name: configure repmgr
     include: repmgr_config.yml
+    tags: repmgr-config
+
   - name: bootstrap repmgr nodes
     include: repmgr_bootstrap.yml
-  when:
-    groups['postgresql'] | length > 1
+    tags: repmgr-bootstrap
+
+  when: groups['postgresql'] | length > 1
+  tags: repmgr
+
+# - include: pgbouncer.yml
+#   when: groups['postgresql'] | length > 1
+#   tags: pgbouncer

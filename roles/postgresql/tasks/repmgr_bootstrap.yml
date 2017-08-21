@@ -8,6 +8,8 @@
 
 - block:
     - name: register master node to repmgr
+      become: true
+      become_user: postgres
       command: repmgr -f /etc/repmgr/repmgr.conf master register
       when: (postgresql_master | bool)
 
@@ -18,8 +20,10 @@
       when: not (postgresql_master | bool)
 
     - name: clone the master on the standby
-      command: "repmgr -f /etc/repmgr/repmgr.conf --force -h {{ groups['postgresql'][0]['ansible_ssh_host'] }} -d repmgr -U repmgr --verbose standby clone"
-      when: not (postgresql_master | bool) and repmgr_stats.rc != 0
+      become: true
+      become_user: postgres
+      command: "repmgr -f /etc/repmgr/repmgr.conf --force -h {{ postgresql_master_ip }} -d repmgr -U repmgr --verbose standby clone"
+      when: not (postgresql_master | bool)
 
     - name: restart postgresql service on standby node
       service:
@@ -28,6 +32,8 @@
       when: not (postgresql_master | bool)
 
     - name: register standby node to repmgr
+      become: true
+      become_user: postgres
       command: repmgr -f /etc/repmgr/repmgr.conf --force standby register
       when: not (postgresql_master | bool)
-  when: repmgr_stats.rc != 0
+  when: repmgr_status.rc != 0

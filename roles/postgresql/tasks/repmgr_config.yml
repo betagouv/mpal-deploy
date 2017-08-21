@@ -18,7 +18,16 @@
     owner: repmgr
     group: repmgr
 
+- name: add postgresql to the repmgr group
+  user:
+    name: postgres
+    group: repmgr
+    append: yes
+
 - name: configure repmgr
   template:
     src: repmgr.conf.j2
     dest: /etc/repmgr/repmgr.conf
+    owner: repmgr
+    group: repmgr
+    mode: 0644
