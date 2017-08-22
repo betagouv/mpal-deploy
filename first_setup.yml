@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ host }}"
+- hosts: all
   tasks:
     - name: Upgrade all packages
       apt:
@@ -31,7 +31,7 @@
 
     - name: Create the authorized file key
       copy:
-        src: "{{ ansible_public_key }}"
+        src: "{{ ansible_public_key_file }}"
         dest: "/home/ansible/.ssh/authorized_keys"
         owner: ansible
         group: ansible

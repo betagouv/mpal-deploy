@@ -48,10 +48,22 @@ frontend front_{{ frontend.name }}
 backend back_{{ backend.name }}
   log global
   mode http
+  balance roundrobin
   option forwardfor
+  option httpchk HEAD / HTTP/1.1
   http-request set-header X-Forwarded-Port %[dst_port]
   http-request add-header X-Forwarded-Proto https if { ssl_fc }
 {% for server in backend.servers %}
-  server srv_{{ server.name }} {{ server.fqdn }}
+  server srv_{{ server.name }} {{ server.ip }}:{{ server.port }} check
 {% endfor %}
 {% endfor %}
+
+
+# Stats page configuration
+listen stats :9000
+   mode http
+   stats enable
+   stats hide-version
+   stats realm Haproxy\ Statistics
+   stats uri /haproxy_stats
+   stats auth {{ haproxy_stats_login }}:{{ haproxy_stats_password }}

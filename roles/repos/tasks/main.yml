@@ -5,6 +5,6 @@
 
 - name: Add backports repo
   apt_repository:
-    repo: deb http://http.debian.net/debian {{ ansible_distribution_release }}-backports main
+    repo: "deb http://{{ debian_backports_repo }} {{ ansible_distribution_release }}-backports main"
     state: present
     update_cache: yes

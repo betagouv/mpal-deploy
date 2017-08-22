@@ -1,4 +1,8 @@
 ---
+##########
+# repos
+debian_backports_repo:
+
 ###############
 # keepalived
 keepalived_vip: '10.66.212.14'
@@ -12,16 +16,20 @@ keepalived_configurations:
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
 haproxy_frontend_port: 80
-haproxy_backend_name: back-test-haproxy
+haproxy_backend_name: back-mpal-test
 haproxy_backend_servers:
   - name: 'be-demat-webapp1'
-    fqdn: '10.66.212.11'
+    ip: '10.66.212.11'
+    port: '3000'
   - name: 'be-demat-webapp2'
-    fqdn: '10.66.212.12'
+    ip: '10.66.212.12'
+    port: '3000'
+
+haproxy_stats_login: mpal
+haproxy_stats_password: mpal
 
 ##########
 # redis
-redis_host_ip: 10.66.212.13
 redis_host_port: 6379
 redis_password: foobar
 redis_master_conf:
@@ -30,7 +38,7 @@ redis_master_conf:
 
 #############
 # postgres
-postgresql_host_ip: 10.66.212.13
+postgresql_master_ip: 10.66.212.13
 postgresql_host_port: 5432
 postgresql_mpal_username: mpal
 postgresql_mpal_password: mpal
@@ -39,7 +47,9 @@ postgresql_webapp_cidr: 10.66.212.0/24
 
 ############
 # webapps
-dot_env_conf: .env.production
+webapp_dot_env_conf: test
+webapp_rails_env: production
+webapp_postgresql_master: "{{ postgresql_master_ip }}"
 
 ########
 # ssh
