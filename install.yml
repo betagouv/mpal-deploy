@@ -32,5 +32,7 @@
   roles:
     - name: ruby
       tags: ruby
+    - name: clamav
+      tags: clamav
     - name: webapps
       tags: webapps
