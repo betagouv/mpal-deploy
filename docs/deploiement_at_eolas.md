@@ -14,7 +14,7 @@
 _Note : dans les instructions de déploiement, les variables sont marqués comme suit `<ENV>`._
 
 ### Déploiement :
-1. Dans "inventories/first_setu/<ENV>.ini", remplir les variables "ansible_public_key_file" et "ansible_ssh_private_key_file".
+1. Dans "inventories/first_setup/&lt;ENV&gt;.ini", remplir les variables "ansible_public_key_file" et "ansible_ssh_private_key_file".
 
 2. `ansible-playbook -i inventories/first_setup/<ENV>.ini first_setup.yml`
 
