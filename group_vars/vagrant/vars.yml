@@ -1,0 +1,68 @@
+---
+##########
+# repos
+debian_backports_repo: http.debian.net/debian
+
+###############
+# Keepalived
+keepalived_vip: '10.0.1.66'
+keepalived_configurations:
+  - keepalived_instance: '1'
+    keepalived_interface: 'eth1'
+    keepalived_priority: '150'
+  - keepalived_instance: '2'
+    keepalived_interface: 'eth1'
+    keepalived_priority: '100'
+
+#############
+# HA Proxy
+haproxy_frontend_name: front-test-haproxy
+haproxy_frontend_ip: "{{ keepalived_vip }}"
+haproxy_frontend_port: 80
+
+haproxy_backend_name: back-test-haproxy
+haproxy_backend_servers:
+  - name: 'be-demat-webapp1'
+    ip: '10.0.1.4'
+    port: '3000'
+  - name: 'be-demat-webapp2'
+    ip: '10.0.1.5'
+    port: '3000'
+
+haproxy_stats_login: mpal
+haproxy_stats_password: mpal
+
+
+##########
+# Redis
+redis_host_port: 6379
+redis_password: foobar
+redis_master_conf:
+  ip: 10.0.1.7
+  password: '{{ redis_password }}'
+redis_slaves_conf:
+  - ip: "{{ inventory_hostname }}"
+    password: "{{ redis_password }}"
+    master_password: "{{ redis_password }}"
+
+###################
+# PostgreSQL
+postgresql_master_ip: 10.0.1.6
+postgresql_host_port: 5432
+postgresql_standby_ip: 10.0.1.7
+postgresql_mpal_username: mpal
+postgresql_mpal_password: mpal
+postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
+postgresql_cidr: 10.0.1.0/24
+postgresql_webapp_cidr: "{{ postgresql_cidr }}"
+postgresql_backend_cidr: "{{ postgresql_cidr }}"
+
+###########
+# repmgr
+repmgr_cluster_name: vagrant_cluster
+
+############
+# webapps
+webapp_dot_env_conf: test
+webapp_rails_env: development
+webapp_postgresql_master: "{{ postgresql_master_ip }}"
