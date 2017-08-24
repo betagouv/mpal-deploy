@@ -1,0 +1,5 @@
+---
+- hosts: all
+  ansible_ssh_user: root
+  roles:
+    - role: webapps
