@@ -44,10 +44,4 @@ Vagrant.configure(2) do |config|
     backend.vm.network "private_network", ip: "10.0.1.7"
   end
 
-  config.vm.define "ruby-builder" do |backend|
-    backend.vm.box = box_image
-    backend.vm.hostname = "ruby-builder"
-    backend.vm.network "private_network", ip: "10.0.1.8"
-  end
-
 end
