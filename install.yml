@@ -13,11 +13,11 @@
 - hosts: webapps
   roles:
     - name: ruby
-      tags: ruby
+      tags: webapps, ruby
     - name: clamav
-      tags: clamav
-    - name: webapps
-      tags: webapps
+      tags: webapps, clamav
+    - name: mpal-web
+      tags: webapps, mpal-web
 
 - hosts: load-balancers
   roles:
