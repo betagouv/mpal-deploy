@@ -1,9 +1,4 @@
 ---
-- hosts: all
-  roles:
-    - name: users
-      tags: users
-
 - hosts: postgresql
   roles:
     - name: postgresql
