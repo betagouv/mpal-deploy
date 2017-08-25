@@ -20,6 +20,9 @@
     group: haproxy
   notify: reload haproxy
 
+- include: certs.yml
+  when: (haproxy_ssl_enabled | bool)
+
 - name: Activates haproxy service
   service:
     name: haproxy

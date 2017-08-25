@@ -41,6 +41,14 @@ frontend front_{{ frontend.name }}
   log global
   mode http
   bind {{ frontend.ip }}:{{ frontend.port }}
+{% if haproxy_ssl_enabled %}
+  bind {{ frontend.ip }}:{{ frontend.ssl_port }} ssl crt /etc/ssl/mpal-web/{{ frontend.ssl_pem_file }}
+{% endif %}
+
+  # Hosts
+  acl host_mpal_web hdr(host) -i {{ frontend.vhost }}
+
+  # Backend routing
   default_backend back_{{ frontend.backend }}
 {% endfor %}
 

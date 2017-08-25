@@ -15,7 +15,9 @@ keepalived_configurations:
 # haproxy
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
-haproxy_frontend_port: 80
+haproxy_ssl_pem_file: mpal-web-prod.pem
+haproxy_frontend_vhost: monprojet.anah.gouv.fr
+
 haproxy_backend_name: back-mpal-test
 haproxy_backend_servers:
   - name: 'be-demat-webapp1'
@@ -43,7 +45,7 @@ postgresql_host_port: 5432
 postgresql_mpal_username: mpal
 postgresql_mpal_password: mpal
 postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
-postgresql_webapp_cidr: 
+postgresql_webapp_cidr:
 
 ############
 # webapps

@@ -18,7 +18,8 @@ keepalived_configurations:
 # HA Proxy
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
-haproxy_frontend_port: 80
+haproxy_ssl_pem_file: mpal-web-vagrant.pem
+haproxy_frontend_vhost: monprojet.vagrant.anah.gouv.fr
 
 haproxy_backend_name: back-test-haproxy
 haproxy_backend_servers:

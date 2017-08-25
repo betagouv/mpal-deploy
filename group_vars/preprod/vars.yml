@@ -15,7 +15,9 @@ keepalived_configurations:
 # haproxy
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
-haproxy_frontend_port: 80
+haproxy_ssl_pem_file: mpal-web-preprod.pem
+haproxy_frontend_vhost: monprojet.preprod.anah.gouv.fr
+
 haproxy_backend_name: back-mpal-test
 haproxy_backend_servers:
   - name: 'be-demat-webapp1'

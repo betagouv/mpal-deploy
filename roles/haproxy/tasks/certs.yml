@@ -1,0 +1,17 @@
+---
+
+- name: Create MPAL web SSL certificate directory
+  file:
+    path: /etc/ssl/mpal-web
+    state: directory
+    owner: haproxy
+    group: haproxy
+    mode: 0600
+
+- name: Install MPAL webapp SSL certificate
+  copy:
+    content: "{{ vaulted.ssl.certificate }}{{ vaulted.ssl.private_key }}{{ vaulted.ssl.issuing_ca }}"
+    dest: "/etc/ssl/mpal-web/{{ haproxy_ssl_pem_file }}"
+    owner: haproxy
+    group: haproxy
+    mode: 0400
