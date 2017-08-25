@@ -34,8 +34,11 @@ Dans "inventories/first_setup/&lt;ENV&gt;.ini", remplir les variables "ansible_p
 ##### Etape 5 : Installation de ruby
 `ansible-playbook -i inventories/<ENV>.ini -t ruby --ask-vault-pass install.yml`
 
-##### Etape 6 : Installation de l'application
-`ansible-playbook -i inventories/<ENV>.ini -t webapps --ask-vault-pass -e "package=<PACKAGE_NAME>" install.yml`
+##### Etape 6 : Installation de l'antivirus
+`ansible-playbook -i inventories/<ENV>.ini -t clamav --ask-vault-pass install.yml`
 
-##### Etape 7 : installation des reverse proxies et de pgbouncer
-`ansible-playbook -i inventories/<ENV>.ini -t --ask-vault-pass load-balancer install.yml`
+##### Etape 7 : Installation de l'application
+`ansible-playbook -i inventories/<ENV>.ini -t mpal-web --ask-vault-pass -e "package=<PACKAGE_NAME>" install.yml`
+
+##### Etape 8 : installation des reverse proxies et de pgbouncer
+`ansible-playbook -i inventories/<ENV>.ini -t --ask-vault-pass load-balancers install.yml`

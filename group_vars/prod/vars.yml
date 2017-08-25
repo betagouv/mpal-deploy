@@ -43,10 +43,22 @@ postgresql_host_port: 5432
 postgresql_mpal_username: mpal
 postgresql_mpal_password: mpal
 postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
-postgresql_webapp_cidr: 
+postgresql_webapp_cidr:
 
 ############
 # webapps
-webapp_dot_env_conf: test
+webapp_api_particulier_domain: particulier.api.gouv.fr
+webapp_clamav_enabled: true
+webapp_clavis_url: https://clavis.anah.fr/clavis/
+webapp_demo: false
+webapp_enabled_departements: 88
+webapp_display_demo_credentials: false
+webapp_domain: anah.beta.gouv.fr
+webapp_env_name: PROD
+webapp_opal_api_base_uri: https://opal.anah.gouv.fr/
+webapp_payments_enabled: false
 webapp_rails_env: production
-webapp_postgresql_master: "{{ postgresql_master_ip }}"
+webapp_rod_api_base_uri: https://rod-dev.anah.fr/api/v1/
+webapp_rod_enabled: true
+webapp_sidekiq_disabled: false
+webapp_use_https: false
