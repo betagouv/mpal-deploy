@@ -18,7 +18,7 @@ _Note 2 : chaque fois qu'une commande précise `--ask-vault-pass` il faut lui in
 ### Déploiement :
 
 ##### Etape 1 : setup ssh
-Dans "inventories/first_setup/&lt;ENV&gt;.ini", remplir les variables "ansible_public_key_file" et "ansible_ssh_private_key_file".
+Dans `inventories/first_setup/<ENV>.ini` et `inventories/<ENV>.ini`, remplir les variables _"ansible_public_key"_ et _"ansible_ssh_private_key_file"_.
 
 ##### Etape 2 : Bootstrap des machines
 
