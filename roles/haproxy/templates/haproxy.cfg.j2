@@ -54,6 +54,7 @@ frontend front_{{ frontend.name }}
 
 {% for backend in haproxy_backends %}
 backend back_{{ backend.name }}
+  redirect scheme https if ! { ssl_fc }
   log global
   mode http
   option forwardfor

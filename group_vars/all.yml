@@ -37,3 +37,4 @@ pgbouncer_db_name: "{{ postgresql_mpal_db_name }}"
 ###########
 # webapp
 webapp_env_var: /var/run/mpal-web
+webapp_serve_static_files: true
