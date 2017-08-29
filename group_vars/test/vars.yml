@@ -1,8 +1,4 @@
 ---
-##########
-# repos
-debian_backports_repo:
-
 ###############
 # keepalived
 keepalived_vip: '10.66.73.100'

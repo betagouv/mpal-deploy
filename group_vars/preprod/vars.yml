@@ -36,14 +36,14 @@ redis_host_port: 6379
 redis_password: foobar
 redis_master_conf:
   ip: 10.67.73.22
-  password: '{{ redis_password }}'
+  password: "{{ redis_password }}"
 
 #############
 # postgres
 postgresql_master_ip: 10.67.73.21
 postgresql_host_port: 5432
-postgresql_mpal_username: mpal
-postgresql_mpal_password: mpal
+postgresql_mpal_username: "{{ vaulted.postgres_username }}"
+postgresql_mpal_password: "{{ vaulted.postgres_password }}"
 postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
 postgresql_webapp_cidr: 10.67.73.0/24
 
