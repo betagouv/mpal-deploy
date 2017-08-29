@@ -5,7 +5,7 @@
     update_cache: yes
   changed_when: false
 
-- name: Install some stuff the app needs
+- name: Install some libraries the app needs
   apt:
     name: "{{ item }}"
     state: present
