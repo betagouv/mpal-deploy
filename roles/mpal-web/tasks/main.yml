@@ -30,14 +30,4 @@
 
     - include: systemd.yml
       tags: systemd
-
-    - name: start mpal-web
-      service:
-        name: mpal-web
-        state: started
-
-    - name: start mpal-worker
-      service:
-        name: mpal-worker
-        state: started
   when: package is defined

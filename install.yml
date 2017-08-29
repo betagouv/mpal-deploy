@@ -19,6 +19,20 @@
     - name: mpal-web
       tags: webapps, mpal-web
 
+- hosts: webapps
+  serial: 1
+  tasks:
+  - name: start mpal-web
+    service:
+      name: mpal-web
+      state: started
+
+  - name: start mpal-worker
+    service:
+      name: mpal-worker
+      state: started
+  tags: webapps, start-webapps
+
 - hosts: load-balancers
   roles:
     - name: haproxy
