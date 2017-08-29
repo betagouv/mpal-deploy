@@ -78,4 +78,4 @@ webapp_rails_env: production
 webapp_rod_api_base_uri: https://anah-bouchon-rod.scalingo.io/api/v1/
 webapp_rod_enabled: true
 webapp_sidekiq_disabled: true
-webapp_use_https: true
+webapp_use_https: false
