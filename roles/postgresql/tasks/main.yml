@@ -36,5 +36,5 @@
   tags: repmgr
 
 - include: pgbouncer.yml
-  when: groups['postgresql'] | length > 1
+  when: (groups['postgresql'] | length > 1) and (postgresql_master | bool)
   tags: pgbouncer

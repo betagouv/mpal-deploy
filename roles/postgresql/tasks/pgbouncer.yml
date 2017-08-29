@@ -1,15 +1,15 @@
 ---
 
-- name: Create the pgbouncer group
-  group:
-    name: pgbouncer
-    state: present
-
-- name: Create the pgbouncer user
-  user:
-    name: pgbouncer
-    group: pgbouncer
-    state: present
+# - name: Create the pgbouncer group
+#   group:
+#     name: pgbouncer
+#     state: present
+#
+# - name: Create the pgbouncer user
+#   user:
+#     name: pgbouncer
+#     group: pgbouncer
+#     state: present
 
 - name: Install pgbouncer
   apt:
@@ -20,20 +20,77 @@
   file:
     path: /etc/pgbouncer
     state: directory
-    owner: pgbouncer
-    group: pgbouncer
+    owner: postgres
+    group: postgres
     mode: 0750
 
 - name: Configure pgbouncer
   template:
-    src: pgbouncer.ini.j2
-    dest: /etc/pgbouncer/pgbouncer.ini
-    owner: pgbouncer
-    group: pgbouncer
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: postgres
+    group: postgres
+    mode: 0600
+  with_items:
+    - src: pgbouncer.ini.j2
+      dest: /etc/pgbouncer/pgbouncer.ini
+    - src: users.txt.j2
+      dest: /etc/pgbouncer/users.txt
+
+- name: Copy start and stop scripts
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: postgres
+    group: postgres
+    mode: 0700
+  with_items:
+    - src: pgbouncer_start.sh
+      dest: /home/postgres/pgbouncer_start.sh
+    - src: pgbouncer_stop.sh
+      dest: /home/postgres/pgbouncer_stop.sh
+
+- name: Create the pgbouncer log file
+  file:
+    path: /var/log/pgbouncer.log
+    owner: postgres
+    group: postgres
     mode: 0640
+    state: touch
+
+- name: Create the pgbouncer run directory
+  file:
+    path: /var/run/pgbouncer
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: 0750
+
+- name: Check if pgbouncer is started
+  shell: ps afux | grep \"[p]gbouncer\"
+  register: pgbouncer_started
+  failed_when: false
+  changed_when: false
 
 - name: Start pgbouncer
-  service:
-    name: pgbouncer
-    state: started
-    enabled: yes
+  become: true
+  become_user: postgres
+  shell: "/usr/bin/strace -o /tmp/trace.out /usr/sbin/pgbouncer -d /etc/pgbouncer/pgbouncer.ini -R"
+  args:
+    chdir: /home/postgres
+    executable: /bin/bash
+  when: pgbouncer_started.rc != 0
+
+# environment:
+#   PATH: /usr/local/bin:/usr/bin:/bin
+#   USER: postgres
+#   SHELL: /bin/bash
+#   LANG: en_US.UTF-8
+
+# - name: Start pgbouncer
+#   become: true
+#   become_user: postgres
+#   command: /home/postgres/pgbouncer_start.sh
+#   args:
+#     chdir: /home/postgres
+#   when: pgbouncer_started.rc != 0

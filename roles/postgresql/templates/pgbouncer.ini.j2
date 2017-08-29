@@ -4,7 +4,7 @@ mpal = host={{ pgbouncer_db_host }} port={{ pgboucner_db_port }} dbname={{ pgbou
 [pgbouncer]
 listen_port = {{ pgbouncer_listen_port }}
 listen_addr = {{ pgbouncer_listen_ip }}
-auth_type = md5
-auth_file = users.txt
+auth_type = trust
+auth_file = /etc/pgbouncer/users.txt
 logfile = /var/log/pgbouncer.log
 pidfile = pgbouncer.pid
