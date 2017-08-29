@@ -3,7 +3,7 @@
 ### Pré requis :
   - machine de type unix (Linux ou MacOS)
   - python 2.7 minimum
-  - ansible
+  - ansible 2.3 minimum
   - accès en ssh aux machines cibles
   - une paire de clés SSH par environnement (PREPROD et PROD)
 
