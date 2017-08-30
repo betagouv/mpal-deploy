@@ -1,16 +1,5 @@
 ---
 
-# - name: Create the pgbouncer group
-#   group:
-#     name: pgbouncer
-#     state: present
-#
-# - name: Create the pgbouncer user
-#   user:
-#     name: pgbouncer
-#     group: pgbouncer
-#     state: present
-
 - name: Install pgbouncer
   apt:
     name: pgbouncer
@@ -36,19 +25,6 @@
       dest: /etc/pgbouncer/pgbouncer.ini
     - src: users.txt.j2
       dest: /etc/pgbouncer/users.txt
-
-- name: Copy start and stop scripts
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: postgres
-    group: postgres
-    mode: 0700
-  with_items:
-    - src: pgbouncer_start.sh
-      dest: /home/postgres/pgbouncer_start.sh
-    - src: pgbouncer_stop.sh
-      dest: /home/postgres/pgbouncer_stop.sh
 
 - name: Create the pgbouncer log file
   file:
@@ -80,17 +56,3 @@
     chdir: /home/postgres
     executable: /bin/bash
   when: pgbouncer_started.rc != 0
-
-# environment:
-#   PATH: /usr/local/bin:/usr/bin:/bin
-#   USER: postgres
-#   SHELL: /bin/bash
-#   LANG: en_US.UTF-8
-
-# - name: Start pgbouncer
-#   become: true
-#   become_user: postgres
-#   command: /home/postgres/pgbouncer_start.sh
-#   args:
-#     chdir: /home/postgres
-#   when: pgbouncer_started.rc != 0
