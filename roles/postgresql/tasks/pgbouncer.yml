@@ -51,7 +51,7 @@
 - name: Start pgbouncer
   become: true
   become_user: postgres
-  shell: "/usr/bin/strace -o /tmp/trace.out /usr/sbin/pgbouncer -d /etc/pgbouncer/pgbouncer.ini -R"
+  shell: "/usr/sbin/pgbouncer -d /etc/pgbouncer/pgbouncer.ini -R"
   args:
     chdir: /home/postgres
     executable: /bin/bash
