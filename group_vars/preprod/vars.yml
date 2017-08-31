@@ -50,17 +50,17 @@ postgresql_webapp_cidr: 10.67.73.0/24
 ############
 # webapps
 webapp_api_particulier_domain: particulier.api.gouv.fr
-webapp_clamav_enabled: true
+webapp_clamav_enabled: 'true'
 webapp_clavis_url: https://clavis.anah.fr/clavis/
-webapp_demo: false
+webapp_demo: 'false'
 webapp_enabled_departements: 88
-webapp_display_demo_credentials: false
+webapp_display_demo_credentials: 'false'
 webapp_domain: anah-preprod.beta.gouv.fr
 webapp_env_name: PREPROD
 webapp_opal_api_base_uri: https://opal.anah.gouv.fr/
-webapp_payments_enabled: false
+webapp_payments_enabled: 'false'
 webapp_rails_env: production
 webapp_rod_api_base_uri: https://rod-dev.anah.fr/api/v1/
-webapp_rod_enabled: true
-webapp_sidekiq_disabled: false
-webapp_use_https: false
+webapp_rod_enabled: 'true'
+webapp_sidekiq_disabled: 'false'
+webapp_use_https: 'false'
