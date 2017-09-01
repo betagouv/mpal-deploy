@@ -63,6 +63,12 @@ webapp_rod_enabled: 'true'
 webapp_sidekiq_disabled: 'true'
 webapp_use_https: 'false'
 
+##############
+# pgbouncer : absent in test but variables needed
+#             so they default to postgres vars
+pgbouncer_listen_ip: "{{ postgresql_master_ip }}"
+pgbouncer_listen_port: "{{ postgresql_host_port }}"
+
 ##########
 # users
 users:
