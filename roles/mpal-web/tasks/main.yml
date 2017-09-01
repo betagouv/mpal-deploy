@@ -31,3 +31,4 @@
     - include: systemd.yml
       tags: systemd
   when: package is defined
+  tags: deploy
