@@ -73,6 +73,7 @@ webapp_display_demo_credentials: 'true'
 webapp_domain: anah-demo.beta.gouv.fr
 webapp_env_name: DEMO
 webapp_opal_api_base_uri: https://gene.anah.gouv.fr/
+webapp_os_enabled: 'true'
 webapp_payments_enabled: 'true'
 webapp_rails_env: production
 webapp_rod_api_base_uri: https://anah-bouchon-rod.scalingo.io/api/v1/

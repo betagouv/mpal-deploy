@@ -33,4 +33,3 @@
     state: present
   environment:
     PATH: /home/mpal/.rbenv/bin:/home/mpal/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-  when: bundler_installed.rc != 0
