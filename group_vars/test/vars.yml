@@ -1,7 +1,7 @@
 ---
 ###############
 # keepalived
-keepalived_vip: '10.66.73.100'
+keepalived_vip: '10.66.212.100'
 keepalived_configurations:
   - keepalived_instance: '1'
     keepalived_interface: 'eth0'
