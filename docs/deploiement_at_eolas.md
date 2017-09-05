@@ -22,7 +22,9 @@ Dans `inventories/first_setup/<ENV>.ini` et `inventories/<ENV>.ini`, remplir les
 
 ##### Etape 2 : Bootstrap des machines
 
-`ansible-playbook -i inventories/first_setup/<ENV>.ini first_setup.yml`
+`ansible-playbook -u root -k -i inventories/first_setup/<ENV>.ini first_setup.yml`
+
+_(Fournir le mode de passe root lors du premier setup.)_
 
 ##### Etape 3 : Installation de postgres en mode redondé
 
