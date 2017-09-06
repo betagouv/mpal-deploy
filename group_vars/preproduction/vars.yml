@@ -5,7 +5,7 @@ debian_backports_repo:
 
 ###############
 # keepalived
-keepalived_vip: '10.66.73.100'
+keepalived_vip: '10.67.73.100'
 keepalived_configurations:
   - keepalived_instance: '1'
     keepalived_interface: 'eth0'
@@ -15,16 +15,16 @@ keepalived_configurations:
 # haproxy
 haproxy_frontend_name: front-test-haproxy
 haproxy_frontend_ip: "{{ keepalived_vip }}"
-haproxy_ssl_pem_file: mpal-web-prod.pem
-haproxy_frontend_vhost: monprojet.anah.gouv.fr
+haproxy_ssl_pem_file: mpal-web-preprod.pem
+haproxy_frontend_vhost: monprojet.preprod.anah.gouv.fr
 
 haproxy_backend_name: back-mpal-test
 haproxy_backend_servers:
   - name: 'be-demat-webapp1'
-    ip: ''
+    ip: '10.67.73.19'
     port: '3000'
   - name: 'be-demat-webapp2'
-    ip: ''
+    ip: '10.67.73.20'
     port: '3000'
 
 haproxy_stats_login: mpal
@@ -35,17 +35,18 @@ haproxy_stats_password: mpal
 redis_host_port: 6379
 redis_password: foobar
 redis_master_conf:
-  ip:
+  ip: 10.67.73.22
   password: "{{ redis_password }}"
 
 #############
 # postgres
-postgresql_master_ip:
+postgresql_master_ip: 10.67.73.21
 postgresql_host_port: 5432
+postgresql_standby_ip: 10.67.73.22
 postgresql_mpal_username: "{{ vaulted.postgres_username }}"
 postgresql_mpal_password: "{{ vaulted.postgres_password }}"
 postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
-postgresql_cidr: 10.66.73.0/24
+postgresql_cidr: 10.67.73.0/24
 postgresql_webapp_cidr: "{{ postgresql_cidr }}"
 postgresql_backend_cidr: "{{ postgresql_cidr }}"
 
@@ -57,8 +58,8 @@ webapp_clavis_url: https://clavis.anah.fr/clavis/
 webapp_demo: 'false'
 webapp_enabled_departements: 88
 webapp_display_demo_credentials: 'false'
-webapp_domain: anah.beta.gouv.fr
-webapp_env_name: PROD
+webapp_domain: anah-preprod.beta.gouv.fr
+webapp_env_name: PREPROD
 webapp_opal_api_base_uri: https://opal.anah.gouv.fr/
 webapp_payments_enabled: 'false'
 webapp_rails_env: production
