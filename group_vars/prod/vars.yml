@@ -45,7 +45,9 @@ postgresql_host_port: 5432
 postgresql_mpal_username: "{{ vaulted.postgres_username }}"
 postgresql_mpal_password: "{{ vaulted.postgres_password }}"
 postgresql_mpal_attr_flags: SUPERUSER,LOGIN,CREATEROLE,CREATEDB,REPLICATION
-postgresql_webapp_cidr:
+postgresql_cidr: 10.66.73.0/24
+postgresql_webapp_cidr: "{{ postgresql_cidr }}"
+postgresql_backend_cidr: "{{ postgresql_cidr }}"
 
 ############
 # webapps
