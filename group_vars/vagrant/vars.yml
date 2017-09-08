@@ -6,6 +6,7 @@ debian_backports_repo: http.debian.net/debian
 ###############
 # Keepalived
 keepalived_vip: '10.0.1.66'
+keepalived_cidr: '24'
 keepalived_configurations:
   - keepalived_instance: '1'
     keepalived_interface: 'eth1'
@@ -17,7 +18,7 @@ keepalived_configurations:
 #############
 # HA Proxy
 haproxy_frontend_name: front-test-haproxy
-haproxy_frontend_ip: "{{ keepalived_vip }}"
+haproxy_frontend_ip: "*"
 haproxy_ssl_pem_file: mpal-web-vagrant.pem
 haproxy_frontend_vhost: monprojet.vagrant.anah.gouv.fr
 

@@ -14,6 +14,12 @@
 - include: master.yml
   when: postgresql_master
 
+- name: restart postgresql master
+  service:
+    name: postgresql
+    state: restarted
+  changed_when: false
+
 - block:
   - name: setup ssh
     include: repmgr_ssh.yml

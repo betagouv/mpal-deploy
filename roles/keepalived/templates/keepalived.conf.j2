@@ -6,6 +6,6 @@ vrrp_instance vip_{{ keepalived_instance }} {
     advert_int 1
 
     virtual_ipaddress {
-        {{ keepalived_vip }}
+        {{ keepalived_vip }}/{{ keepalived_cidr }}
     }
 }

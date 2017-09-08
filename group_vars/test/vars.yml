@@ -2,6 +2,7 @@
 ###############
 # keepalived
 keepalived_vip: '10.66.212.100'
+keepalived_cidr: '24'
 keepalived_configurations:
   - keepalived_instance: '1'
     keepalived_interface: 'eth0'
@@ -10,7 +11,7 @@ keepalived_configurations:
 ############
 # haproxy
 haproxy_frontend_name: front-test-haproxy
-haproxy_frontend_ip: "{{ keepalived_vip }}"
+haproxy_frontend_ip: "*"
 haproxy_ssl_pem_file: mpal-web-test.pem
 haproxy_frontend_vhost: monprojet.recette.anah.gouv.fr
 
