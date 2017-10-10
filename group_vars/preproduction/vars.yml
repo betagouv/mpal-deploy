@@ -39,7 +39,7 @@ redis_master_conf:
   ip: 10.67.73.22
   password: "{{ redis_password }}"
 redis_slaves_conf:
-  - ip: "{{ inventory_hostname }}"
+  - ip: 10.67.73.21
     password: "{{ redis_password }}"
     master_password: "{{ redis_password }}"
 

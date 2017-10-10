@@ -36,10 +36,10 @@ haproxy_stats_password: mpal
 redis_host_port: 6379
 redis_password: foobar
 redis_master_conf:
-  ip: 10.67.73.22
+  ip: 10.66.73.16
   password: "{{ redis_password }}"
 redis_slaves_conf:
-  - ip: "{{ inventory_hostname }}"
+  - ip: 10.66.73.15
     password: "{{ redis_password }}"
     master_password: "{{ redis_password }}"
 
