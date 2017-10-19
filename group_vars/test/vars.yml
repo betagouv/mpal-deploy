@@ -53,16 +53,16 @@ webapp_clamav_enabled: 'true'
 webapp_clavis_url: https://preprod-clavis.anah.fr/clavis/
 webapp_demo: 'true'
 webapp_enabled_departements: 25,31,88,95
-webapp_display_demo_credentials: 'true'
-webapp_domain: anah-demo.beta.gouv.fr
-webapp_env_name: DEMO
+webapp_display_demo_credentials: 'false'
+webapp_domain: monprojet.recette.anah.gouv.fr
+webapp_env_name: RECETTE
 webapp_opal_api_base_uri: https://gene.anah.gouv.fr/
 webapp_payments_enabled: 'true'
 webapp_rails_env: production
 webapp_rod_api_base_uri: https://anah-bouchon-rod.scalingo.io/api/v1/
 webapp_rod_enabled: 'true'
 webapp_sidekiq_disabled: 'true'
-webapp_use_https: 'false'
+webapp_use_https: 'true'
 
 ##############
 # pgbouncer : absent in test but variables needed

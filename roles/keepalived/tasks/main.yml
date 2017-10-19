@@ -15,7 +15,7 @@
     name: keepalived
     state: present
 
-- name: Confiure keepalived
+- name: Configure keepalived
   template:
     src: keepalived.conf.j2
     dest: /etc/keepalived/keepalived.conf
