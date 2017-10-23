@@ -9,15 +9,14 @@ RUN apt-get update -y && \
     apt-get install -y curl && \
     apt-get install -y g++ && \
     apt-get install -y libicu-dev && \
-    apt-get install -y && \
     apt-get install -y libpq-dev && \
     apt-get install -y git
 
 # Install Ruby with RVM and some gems
-ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/rvm/rubies/ruby-2.3.1/bin/
+ENV PATH /usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/rvm/rubies/ruby-2.3.5/bin/
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && \
     \curl -sSL https://get.rvm.io | bash && \
-    /usr/local/rvm/bin/rvm install ruby-2.3.1
+    /usr/local/rvm/bin/rvm install ruby-2.3.5
 RUN gem install bundler && \
     gem install foreman && \
     gem install rb-readline

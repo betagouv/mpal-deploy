@@ -6,7 +6,7 @@ context 'Ruby should be properly installed' do
   # rubocop:enable LineLength
   set :sudo_options, '-u mpal -i'
 
-  describe command('rbenv global 2.3.1 && ruby -v') do
-    its(:stdout) { should contain 'ruby 2.3.1' }
+  describe command('rbenv global 2.3.5 && ruby -v') do
+    its(:stdout) { should contain 'ruby 2.3.5' }
   end
 end

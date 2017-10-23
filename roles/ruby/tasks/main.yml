@@ -46,7 +46,7 @@
       git:
         repo: 'https://github.com/rbenv/ruby-build.git'
         dest: /home/mpal/.rbenv/plugins/ruby-build
-        version: v20170726
+        version: v20170914
 
     - name: Make rbenv belong to mpal
       file:
@@ -58,14 +58,14 @@
     - name: Check if ruby is already installed
       become: true
       become_user: mpal
-      command: /home/mpal/.rbenv/versions/2.3.1/bin/ruby --version
+      command: /home/mpal/.rbenv/versions/2.3.5/bin/ruby --version
       changed_when: false
       failed_when: false
       register: ruby_version
 
-    - name: Install ruby 2.3.1
+    - name: Install ruby 2.3.5
       become: true
       become_user: mpal
-      command: /home/mpal/.rbenv/bin/rbenv install 2.3.1
+      command: /home/mpal/.rbenv/bin/rbenv install 2.3.5
       when: ruby_version.rc != 0
   when: not ('rbenv 1.1.1' in rbenv_version)
