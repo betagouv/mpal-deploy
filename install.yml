@@ -14,8 +14,8 @@
   roles:
     - name: ruby
       tags: webapps, ruby
-    # - name: clamav
-    #   tags: webapps, clamav
+    - name: clamav
+      tags: webapps, clamav
     - name: mpal-web
       tags: webapps, mpal-web
 

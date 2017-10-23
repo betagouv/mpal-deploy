@@ -58,9 +58,9 @@ backend back_{{ backend.name }}
   log global
   mode http
   option forwardfor
-  option httpchk HEAD /health HTTP/1.1
+  option httpchk GET /health HTTP/1.1
   http-check expect status 200
-  default-server inter 3s fall 3 rise 2
+  default-server inter 1s fall 3 rise 2
   http-request set-header X-Forwarded-Port %[dst_port]
   http-request add-header X-Forwarded-Proto https if { ssl_fc }
 {% for server in backend.servers %}
