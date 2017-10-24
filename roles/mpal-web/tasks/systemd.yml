@@ -16,6 +16,14 @@
     dest: "{{ webapp_env_var }}"
     mode: 0600
 
+- name: Create MPAL log directory
+  file:
+    path: /var/log/mpal
+    state: directory
+    owner: mpal
+    group: mpal
+    mode: 0755
+
 - name: Enable MPAL services
   service:
     name: "{{ item }}"

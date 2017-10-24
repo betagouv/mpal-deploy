@@ -9,7 +9,7 @@ Group=mpal
 EnvironmentFile={{ webapp_env_var }}
 WorkingDirectory=/home/mpal/mpal-webapp
 ExecStartPre=/bin/bash -c -l '/home/mpal/.rbenv/shims/bundle exec rake db:migrate after_party:run assets:precompile assets:clean RAILS_ENV={{ webapp_rails_env }}'
-ExecStart=/bin/bash -c -l '/home/mpal/.rbenv/shims/bundle exec rails server -p $PORT -b 0.0.0.0'
+ExecStart=/bin/bash -c -l '/home/mpal/.rbenv/shims/bundle exec rails server -p $PORT -b 0.0.0.0 >> /var/log/mpal/production.log'
 TimeoutSec=180
 RestartSec=15s
 Restart=always
