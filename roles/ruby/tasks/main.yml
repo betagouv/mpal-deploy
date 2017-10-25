@@ -42,30 +42,37 @@
         dest:  /home/mpal/.rbenv
         version: v1.1.1
 
-    - name: Install ruby-build extension
-      git:
-        repo: 'https://github.com/rbenv/ruby-build.git'
-        dest: /home/mpal/.rbenv/plugins/ruby-build
-        version: v20170914
-
     - name: Make rbenv belong to mpal
       file:
         path: /home/mpal/.rbenv
         owner: mpal
         group: mpal
         mode: 0755
-
-    - name: Check if ruby is already installed
-      become: true
-      become_user: mpal
-      command: /home/mpal/.rbenv/versions/2.3.5/bin/ruby --version
-      changed_when: false
-      failed_when: false
-      register: ruby_version
-
-    - name: Install ruby 2.3.5
-      become: true
-      become_user: mpal
-      command: /home/mpal/.rbenv/bin/rbenv install 2.3.5
-      when: ruby_version.rc != 0
   when: not ('rbenv 1.1.1' in rbenv_version)
+
+- name: Check if ruby-build is already installed
+  command: /home/mpal/.rbenv/plugins/ruby-build --version
+  register: ruby_build_version
+  changed_when: false
+  failed_when: false
+
+- name: Install ruby-build extension
+  git:
+    repo: 'https://github.com/rbenv/ruby-build.git'
+    dest: /home/mpal/.rbenv/plugins/ruby-build
+    version: v20170914
+  when: not ('ruby-build 20170914' in ruby_build_version)
+
+- name: Check if ruby is already installed
+  become: true
+  become_user: mpal
+  command: /home/mpal/.rbenv/versions/2.3.5/bin/ruby --version
+  register: ruby_version
+  changed_when: false
+  failed_when: false
+
+- name: Install ruby 2.3.5
+  become: true
+  become_user: mpal
+  command: /home/mpal/.rbenv/bin/rbenv install 2.3.5
+  when: ruby_version.rc != 0

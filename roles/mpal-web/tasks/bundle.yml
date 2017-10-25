@@ -3,7 +3,7 @@
   become: true
   become_user: mpal
   become_method: sudo
-  command: which bundle
+  command: rbenv which bundle
   args:
     chdir: /home/mpal/mpal-webapp
   environment:
