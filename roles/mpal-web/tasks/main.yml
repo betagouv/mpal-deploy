@@ -18,6 +18,17 @@
     - 'libpq5'
     - 'libpq-dev'
 
+- name: Configure logrotate
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: mpal
+      dest: /etc/logrotate.d/mpal
+
 - block:
     - include: clean.yml
       tags: clean-webapp

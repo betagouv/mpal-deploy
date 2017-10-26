@@ -1,0 +1,11 @@
+/var/log/mpal/production.log {
+  daily
+  rotate 7
+  compress
+  delaycompressfresh
+  missingok
+  notifempty
+  create 644 root root
+  size 20M
+  copytruncate
+}
