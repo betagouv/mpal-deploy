@@ -25,6 +25,7 @@
       dest: /etc/pgbouncer/pgbouncer.ini
     - src: users.txt.j2
       dest: /etc/pgbouncer/users.txt
+  notify: restart pgbouncer
 
 - name: Create the pgbouncer log file
   file:
@@ -42,17 +43,15 @@
     group: postgres
     mode: 0750
 
-- name: Check if pgbouncer is started
-  shell: ps afux | grep \"[p]gbouncer\"
-  register: pgbouncer_started
-  failed_when: false
-  changed_when: false
+- name: Install systemd unit files
+  copy:
+    src: pgbouncer.service
+    dest: /etc/systemd/system/pgbouncer.service
+    mode: 0644
 
 - name: Start pgbouncer
-  become: true
-  become_user: postgres
-  shell: "/usr/sbin/pgbouncer -d /etc/pgbouncer/pgbouncer.ini -R"
-  args:
-    chdir: /home/postgres
-    executable: /bin/bash
-  when: pgbouncer_started.rc != 0
+  service:
+    name: pgbouncer
+    enabled: yes
+    daemon_reload: yes
+    state: started

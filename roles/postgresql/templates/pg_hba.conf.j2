@@ -84,7 +84,7 @@
 local   all             postgres                                peer
 
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
-host    mpal            mpal            {{ postgresql_webapp_cidr }}    password
+host    mpal            mpal            {{ postgresql_webapp_cidr }}   md5
 {% if groups['postgresql'] | length > 1 %}
 host    repmgr          repmgr          {{ postgresql_backend_cidr }}   trust
 host    replication     repmgr          {{ postgresql_backend_cidr }}   trust

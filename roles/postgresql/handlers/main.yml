@@ -4,4 +4,8 @@
   service:
     name: postgresql
     state: restarted
-  changed_when: false
+
+- name: restart pgbouncer
+  service:
+    name: pgbouncer
+    state: restarted

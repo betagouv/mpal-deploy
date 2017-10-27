@@ -30,6 +30,7 @@
     owner: postgres
     group: postgres
     mode: 0600
+  notify: restart postgresql
 
 - block:
     - name: Create the repmgr Postgres user

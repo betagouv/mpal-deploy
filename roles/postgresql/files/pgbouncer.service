@@ -1,0 +1,13 @@
+[Unit]
+Description=PgBouncer
+Requires=network.target
+
+[Service]
+Type=simple
+User=postgres
+Group=postgres
+PIDFile=/var/run/pgbouncer/pgbouncer.pid
+ExecStart=/usr/sbin/pgbouncer /etc/pgbouncer/pgbouncer.ini
+
+[Install]
+WantedBy=multi-user.target
