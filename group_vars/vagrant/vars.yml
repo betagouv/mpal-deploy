@@ -43,7 +43,7 @@ redis_master_conf:
   ip: 10.0.1.7
   password: '{{ redis_password }}'
 redis_slaves_conf:
-  - ip: "{{ inventory_hostname }}"
+  - ip: "{{ ansible_ssh_host }}"
     password: "{{ redis_password }}"
     master_password: "{{ redis_password }}"
 
