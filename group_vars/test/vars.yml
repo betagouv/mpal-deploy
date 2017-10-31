@@ -68,8 +68,7 @@ webapp_use_https: 'true'
 # pgbouncer : absent in test but variables needed
 #             so they default to postgres vars
 pgbouncer_listen_ip: "{{ postgresql_master_ip }}"
-pgbouncer_listen_port: "{{ postgresql_host_port }}"
-
+pgbouncer_listen_port: 6543
 ##########
 # users
 users:
