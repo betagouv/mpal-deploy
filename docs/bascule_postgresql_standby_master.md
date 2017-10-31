@@ -30,4 +30,4 @@ Mettre à jour les variables `postgresql_master_ip` et `postgresql_slave_ip`
   - vérifier la promotion avec `repmgr -f /etc/repmgr/repmgr.conf cluster show`
 
 ##### Etape 4 : Redémarrer les serveurs applicatifs
-`ansible-playbook -i inventories/<ENV>.ini -l webapps -t deploy(à changer) --ask-vault-pass install.yml`
+`ansible-playbook -i inventories/<ENV>.ini -l webapps -t deploy --ask-vault-pass install.yml`
