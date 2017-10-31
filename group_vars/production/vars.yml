@@ -76,3 +76,8 @@ webapp_rod_api_base_uri: https://rod-dev.anah.fr/api/v1/
 webapp_rod_enabled: 'true'
 webapp_sidekiq_disabled: 'false'
 webapp_use_https: 'true'
+
+############
+# nfs
+nfs_file_system: 10.66.73.40:/MA_25892_anah_demat/prod
+has_nfs: true

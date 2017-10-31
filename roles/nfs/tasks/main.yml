@@ -1,0 +1,20 @@
+---
+- name: Install nfs-common
+  apt:
+    name: nfs-common
+
+- name: Create /data directory for nfs
+  file:
+    path: /data
+    state: directory
+
+- name: Mount up nfs
+  mount:
+    path: /data
+    src: {{ nfs_file_system }}
+    fstype: nfs
+    state: present
+    when: has_nfs == true
+
+#TODO role joué sur plusieurs environnnement : créer repertoire qui a le nom de l'environnement
+#Faire attentions à ce que la prod ne puisse pas taper dans le repertoire de preprod
