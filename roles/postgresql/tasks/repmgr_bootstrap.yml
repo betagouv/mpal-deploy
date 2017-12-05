@@ -1,5 +1,4 @@
 ---
-
 - name: check repmgr status
   command: repmgr -f /etc/repmgr/repmgr.conf cluster show
   register: repmgr_status
@@ -13,6 +12,16 @@
       command: repmgr -f /etc/repmgr/repmgr.conf master register
       when: (postgresql_master | bool)
 
+    - name: Configure the slave node
+      lineinfile:
+        path: /etc/postgresql/9.6/main/postgresql.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      with_items:
+        - regexp: "^#?hot_standby =.*$"
+          line: "hot_standby = on"
+      when: not (postgresql_master | bool)
+
     - name: stop postgresql service on standby node
       service:
         name: postgresql
@@ -22,13 +31,13 @@
     - name: clone the master on the standby
       become: true
       become_user: postgres
-      command: "repmgr -f /etc/repmgr/repmgr.conf --force -h {{ postgresql_master_ip }} -d repmgr -U repmgr --verbose standby clone"
+      command: "repmgr -f /etc/repmgr/repmgr.conf --force -h {{ postgresql_master_ip }} -d repmgr -U repmgr --verbose standby clone --rsync-only"
       when: not (postgresql_master | bool)
 
     - name: restart postgresql service on standby node
       service:
         name: postgresql
-        state: started
+        state: restarted
       when: not (postgresql_master | bool)
 
     - name: register standby node to repmgr

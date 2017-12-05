@@ -1,8 +1,30 @@
 ---
+- name: get mpal code
+  get_url:
+    url: https://github.com/sgmap/mpal/archive/{{ package }}.tar.gz
+    dest: /tmp/mpal-webapp.tar.gz
+    force: true
+    owner: mpal
+    group: mpal
+    mode: 0755
+
 - name: Unpack the app
   unarchive:
-    src: "{{ package }}.tar.bz2"
+    src: /tmp/mpal-webapp.tar.gz
     dest: /home/mpal
+    remote_src: yes
+    owner: mpal
+    group: mpal
+    mode: 0755
+
+- name: symlink to new app
+  file:
+    src: /home/mpal/mpal-{{ package }}
+    dest: /home/mpal/mpal-webapp
+    state: link
+    owner: mpal
+    group: mpal
+    mode: 0755
 
 - name: Create the mpal tmp/cache directory
   file:

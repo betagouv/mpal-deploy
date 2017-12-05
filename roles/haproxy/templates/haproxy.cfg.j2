@@ -70,7 +70,8 @@ backend back_{{ backend.name }}
 
 
 # Stats page configuration
-listen stats :9000
+listen stats
+   bind :9000
    mode http
    stats enable
    stats hide-version

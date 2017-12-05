@@ -1,10 +1,5 @@
 ---
 
-- name: Install pgbouncer
-  apt:
-    name: pgbouncer
-    state: present
-
 - name: Create pgbouncer configuration directory
   file:
     path: /etc/pgbouncer
@@ -34,6 +29,11 @@
     group: postgres
     mode: 0640
     state: touch
+
+- name: Install pgbouncer
+  apt:
+    name: pgbouncer
+    state: present
 
 - name: Create the pgbouncer run directory
   file:

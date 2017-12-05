@@ -1,26 +1,13 @@
 ---
 
-- name: Create the postgres group
-  group:
-    name: postgres
-    state: present
-
-- name: Create the postgres user
-  user:
-    name: postgres
-    generate_ssh_key: true
-    group: postgres
-    shell: /bin/bash
-    state: present
-
 - name: Install PostgreSQL, libpq, psycopg2, PostgreSQL client
   apt:
     name: "{{ item }}"
     state: present
   with_items:
-    - postgresql-9.4
-    - postgresql-client-9.4
-    - postgresql-9.4-repmgr
+    - postgresql-9.6
+    - postgresql-client-9.6
+    - postgresql-9.6-repmgr
     - repmgr
     - libpq-dev
     - python-psycopg2

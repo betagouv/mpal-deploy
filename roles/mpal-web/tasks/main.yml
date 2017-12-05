@@ -30,9 +30,6 @@
       dest: /etc/logrotate.d/mpal
 
 - block:
-    - include: clean.yml
-      tags: clean-webapp
-
     - include: install.yml
       tags: install-webapp
 

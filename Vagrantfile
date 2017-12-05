@@ -1,7 +1,7 @@
 Vagrant.configure(2) do |config|
 
   config.vm.boot_timeout = 120
-  box_image = "debian/jessie64"
+  box_image = "debian/stretch64"
 
   # Append our own public key to log in the VMs.
   id_rsa_key_pub = File.read(File.join(Dir.home, ".ssh", "id_rsa.pub"))

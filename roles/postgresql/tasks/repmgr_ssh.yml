@@ -1,12 +1,18 @@
 ---
 
+
+- name: create posgres id rsa
+  user:
+    name: postgres
+    generate_ssh_key: yes
+
 - name: clean known public keys
   become: false
   local_action: command rm -f /tmp/*{{ repmgr_cluster_name }}_id_rsa.pub
 
 - name: fetch master's public key
   fetch:
-    src: /home/postgres/.ssh/id_rsa.pub
+    src: /var/lib/postgresql/.ssh/id_rsa.pub
     dest: /tmp/master_{{ repmgr_cluster_name }}_id_rsa.pub
     flat: yes
   when: (postgresql_master | bool)
@@ -19,7 +25,7 @@
 
 - name: fetch standby's public key
   fetch:
-    src: /home/postgres/.ssh/id_rsa.pub
+    src: /var/lib/postgresql/.ssh/id_rsa.pub
     dest: /tmp/standby_{{ repmgr_cluster_name }}_id_rsa.pub
     flat: yes
   when: not (postgresql_master | bool)
@@ -46,7 +52,7 @@
 
 - name: create known_hosts files
   file:
-    path: /home/postgres/.ssh/known_hosts
+    path: /var/lib/postgresql/.ssh/known_hosts
     owner: postgres
     group: postgres
     mode: 0600
@@ -66,12 +72,12 @@
 
 - name: append ssh master identity to standby known_hosts
   copy:
-    dest: /home/postgres/.ssh/known_hosts
+    dest: /var/lib/postgresql/.ssh/known_hosts
     content: "{{ ssh_master_identity.stdout }}"
   when: not (postgresql_master | bool)
 
 - name: append ssh standby identity to master known_hosts
   copy:
-    dest: /home/postgres/.ssh/known_hosts
+    dest: /var/lib/postgresql/.ssh/known_hosts
     content: "{{ ssh_standby_identity.stdout }}"
   when: (postgresql_master | bool)

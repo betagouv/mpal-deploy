@@ -12,6 +12,14 @@
   failed_when: false
   changed_when: false
 
+- name: set rbenv global version
+  become_user: mpal
+  shell: rbenv global 2.3.5
+  args:
+    chdir: /home/mpal/mpal-webapp
+  environment:
+    PATH: /home/mpal/.rbenv/bin:/home/mpal/.rbenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 - name: Install bundler
   become: true
   become_user: mpal
@@ -24,9 +32,7 @@
   when: bundler_installed.rc != 0
 
 - name: Install the vendored gems
-  become: true
   become_user: mpal
-  become_method: sudo
   bundler:
     chdir: /home/mpal/mpal-webapp
     deployment_mode: true

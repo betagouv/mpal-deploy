@@ -10,8 +10,8 @@
   template:
     src: redis.conf.j2
     dest: /etc/redis/redis.conf
-    owner: root
-    group: root
+    owner: redis
+    group: redis
   vars:
     redis_node_ip: "{{ redis_master_conf.ip }}"
     redis_node_password: "{{ redis_master_conf.password }}"
@@ -23,8 +23,8 @@
   template:
     src: redis.conf.j2
     dest: /etc/redis/redis.conf
-    owner: root
-    group: root
+    owner: redis
+    group: redis
   vars:
     redis_node_ip: "{{ item.ip }}"
     redis_node_password: "{{ item.password }}"
