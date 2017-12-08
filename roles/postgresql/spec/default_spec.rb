@@ -3,7 +3,7 @@ require 'spec_helper'
 # rubocop:disable BlockLength
 context 'PostgreSQL should run properly' do
   context 'As root' do
-    describe file('/etc/postgresql/9.6/main/postgresql.conf') do
+    describe file('/etc/postgresql/9.4/main/postgresql.conf') do
       it { should be_file }
       it { should be_owned_by 'postgres' }
       it { should be_grouped_into 'postgres' }

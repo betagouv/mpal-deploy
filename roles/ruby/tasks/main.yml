@@ -27,7 +27,7 @@
         - autoconf
         - bison
         - build-essential
-        - libssl1.0-dev
+        - libssl-dev
         - libyaml-dev
         - libreadline6-dev
         - zlib1g-dev

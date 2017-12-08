@@ -2,7 +2,7 @@
 
 - name: Configures PostgreSQL so that it listens to every interface
   lineinfile:
-    path: /etc/postgresql/9.6/main/postgresql.conf
+    path: /etc/postgresql/9.4/main/postgresql.conf
     regexp: "^#?listen_addresses =.*$"
     line: "listen_addresses = '*'"
   notify: restart postgresql
@@ -10,7 +10,7 @@
 - name: Configure access to the master node
   template:
     src: pg_hba.conf.j2
-    dest: /etc/postgresql/9.6/main/pg_hba.conf
+    dest: /etc/postgresql/9.4/main/pg_hba.conf
     owner: postgres
     group: postgres
     mode: 0600

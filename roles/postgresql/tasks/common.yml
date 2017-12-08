@@ -1,13 +1,23 @@
 ---
+- locale_gen:
+    name: fr_FR.UTF-8
+    state: present
+- lineinfile:
+    path: /etc/locale.gen
+    line: fr_FR.UTF-8 UTF-8
+- shell: locale-gen
+
+- shell: /usr/sbin/update-locale LANG=fr_FR.UTF-8 LC_ALL=$locale
 
 - name: Install PostgreSQL, libpq, psycopg2, PostgreSQL client
   apt:
     name: "{{ item }}"
     state: present
+    update_cache: true
   with_items:
-    - postgresql-9.6
-    - postgresql-client-9.6
-    - postgresql-9.6-repmgr
+    - postgresql-9.4
+    - postgresql-client-9.4
+    - postgresql-9.4-repmgr
     - repmgr
     - libpq-dev
     - python-psycopg2

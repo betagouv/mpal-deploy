@@ -14,7 +14,7 @@
 
     - name: Configure the slave node
       lineinfile:
-        path: /etc/postgresql/9.6/main/postgresql.conf
+        path: /etc/postgresql/9.4/main/postgresql.conf
         regexp: "{{ item.regexp }}"
         line: "{{ item.line }}"
       with_items:
@@ -31,7 +31,7 @@
     - name: clone the master on the standby
       become: true
       become_user: postgres
-      command: "repmgr -f /etc/repmgr/repmgr.conf --force -h {{ postgresql_master_ip }} -d repmgr -U repmgr --verbose standby clone --rsync-only"
+      command: "repmgr -f /etc/repmgr/repmgr.conf --force -h {{ postgresql_master_ip }} -d repmgr -U repmgr --verbose standby clone"
       when: not (postgresql_master | bool)
 
     - name: restart postgresql service on standby node

@@ -2,7 +2,7 @@
 
 - name: Configure the master node
   lineinfile:
-    path: /etc/postgresql/9.6/main/postgresql.conf
+    path: /etc/postgresql/9.4/main/postgresql.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:
