@@ -63,6 +63,7 @@ webapp_rod_api_base_uri: https://anah-bouchon-rod.scalingo.io/api/v1/
 webapp_rod_enabled: 'true'
 webapp_sidekiq_disabled: 'false'
 webapp_use_https: 'true'
+webapp_secret_sel_api_for_opal: '893630c0a612663f4c1a4edb5df23434febf07baef811cb61fdadb75563656f2'
 
 ##############
 # pgbouncer : absent in test but variables needed
